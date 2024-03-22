@@ -1,0 +1,71 @@
+#define .NpcID:Luigi 0`
+
+@ $Script_Main {
+    Set *GB_WorldLocation  .Location:GoombaRoad
+    
+    Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+    Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+    Call SetCamEnabled      ( .Cam:Default .True
+    Call SetCamLeadPlayer   ( .Cam:Default .False )
+    
+    Exec $Script_MakeEntities
+    Exec $Script_SetupMusic
+    Exec $Script_EnterMap
+    
+    Call MakeNpcs ( .False $NpcGroupList )
+    
+    Return
+    End
+}
+
+% Custom NPCs
+#new:NpcSettings $NpcSettings_Luigi
+{
+    00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000
+    00000000 00000000 00630000
+}
+
+#new:Script $Script_Init_Luigi {
+    Call BindNpcInteract ( .Npc:Self $Script_Interact_NpcGuard )
+    Return
+    End
+}
+
+#new:Script $Script_Interact_NpcGuard
+{
+    % talkAnim - AAAABBCC - luigi (0x82), palette 00, animation 14
+    % idleAnim - AAAABBCC - luigi (0x82), palette 00, animation 04
+    % stringID - AAAABBBB - my mod strings (0x2F), string 0
+    
+    Call DisablePlayerInput ( .True )
+    
+    Call GetPlayerPos ( *VarA *VarB *VarC )
+    Call ShowEmote ( 00000000 .Emote:Exclamation -45` 30` .False *VarA *VarB *VarC 0` )
+    Wait 30`
+    
+    Call SpeakToPlayer ( .NpcID:Luigi 00820014 00820004 00000000 002F0000 )
+    
+    Wait 20`
+    
+    Call SetNpcAnimation ( .NpcID:Luigi 0082000C )
+    
+    % Call DisablePlayerInput ( .False )
+    
+    Return
+    End
+}
+
+#new:NpcGroup $NpcGroup_Luigi
+{
+    .NpcID:Luigi $NpcSettings_Luigi ~Vec3f:Luigi
+    00000D01 $Script_Init_Luigi 0 0 0
+    ~NoDrops
+    ~Movement:Luigi
+    ~AnimationTable:Luigi
+    00000000 00000000 00000000 00000000 % no tattle string
+}
+
+#new:NpcGroupList $NpcGroupList {
+    00000001 $NpcGroup_Luigi 00000000
+    00000000 00000000 00000000
+}

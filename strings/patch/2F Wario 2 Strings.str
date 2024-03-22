@@ -1,0 +1,10 @@
+#message:2F:000 {
+	[Style Right]
+	[Pause:20]Oh, so you decided to come[br]
+	after all?[br]
+	[Wait][Next]
+	Let's finally get this over us[br]
+	then.[br]
+	[Wait][End]
+}
+
