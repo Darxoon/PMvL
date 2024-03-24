@@ -1,71 +1,118 @@
 #define .NpcID:Luigi 0`
 
+% Credit to Nine
+#new:Function $GivePlayerStartingStats {
+    LIO t0, 8010F290
+    ORI t2, r0, 1E % hex for 30
+    ORI t3, r0, 1E % hex for 30
+    ORI t4, r0, 1B % hex for 27
+    ORI t5, r0, 1 % hex for 1
+    ORI t6, r0, 2 % hex for 2
+    ORI t7, r0, 7 % hex for 7
+    SB t6, 0000 (t0) % set Boots
+    SB t6, 0001 (t0) % set Hammer
+    SB t2, 0002 (t0) % set hp
+    SB t2, 0003 (t0) % max hp
+    SB t2, 0004 (t0) % true max hp
+    SB t2, 0005 (t0) % set fp
+    SB t2, 0006 (t0) % max fp
+    SB t2, 0007 (t0) % true max fp
+    SB t3, 0008 (t0) % max BP
+    SB t4, 0009 (t0) % level
+    SB t5, 000A (t0) % Lucky Star
+    SB t5, 001C (t0) % Goombario Get
+    SB t6, 001D (t0) % Goombario level
+    SB t5, 0012 (t0) % Goombario out
+    SB t7, 0290 (t0) 
+    SB t7, 028E (t0) %star power
+    JR RA
+    ORI v0, r0, 2
+}
+
 @ $Script_Main {
-    Set *GB_WorldLocation  .Location:GoombaRoad
-    
-    Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
-    Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
-    Call SetCamEnabled      ( .Cam:Default .True
-    Call SetCamLeadPlayer   ( .Cam:Default .False )
-    
-    Exec $Script_MakeEntities
-    Exec $Script_SetupMusic
-    Exec $Script_EnterMap
-    
-    Call MakeNpcs ( .False $NpcGroupList )
-    
-    Return
-    End
+	Set *GB_WorldLocation  .Location:GoombaRoad
+	
+	Call SetCamPerspective  ( .Cam:Default 00000003 00000019 00000010 00001000 )
+	Call SetCamBGColor      ( .Cam:Default 00000000 00000000 00000000 )
+	Call SetCamEnabled      ( .Cam:Default .True
+	Call SetCamLeadPlayer   ( .Cam:Default .False )
+	
+	Exec $Script_MakeEntities
+	Exec $Script_SetupMusic
+	Exec $Script_EnterMap
+	
+	If *GF_Tutorial_SwapTurnOrder == .False
+		Set *GF_Tutorial_SwapTurnOrder .True
+	EndIf
+	
+	If *MF_PlayerInitialized == .False
+		Call $GivePlayerStartingStats ( )
+		Set *MF_PlayerInitialized .True
+	EndIf
+	
+	Call MakeNpcs ( .False $NpcGroupList )
+	
+	Return
+	End
 }
 
 % Custom NPCs
 #new:NpcSettings $NpcSettings_Luigi
 {
-    00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000
-    00000000 00000000 00630000
+	00000000 00180018 00000000 00000000 00000000 00000000 00000000 00000000
+	00000000 00000000 00630000
 }
 
 #new:Script $Script_Init_Luigi {
-    Call BindNpcInteract ( .Npc:Self $Script_Interact_NpcGuard )
-    Return
-    End
+	Call BindNpcInteract ( .Npc:Self $Script_Interact_Luigi )
+	Call BindNpcDefeat ( .Npc:Self $Script_Defeat_Luigi )
+	Return
+	End
 }
 
-#new:Script $Script_Interact_NpcGuard
-{
-    % talkAnim - AAAABBCC - luigi (0x82), palette 00, animation 14
-    % idleAnim - AAAABBCC - luigi (0x82), palette 00, animation 04
-    % stringID - AAAABBBB - my mod strings (0x2F), string 0
-    
-    Call DisablePlayerInput ( .True )
-    
-    Call GetPlayerPos ( *VarA *VarB *VarC )
-    Call ShowEmote ( 00000000 .Emote:Exclamation -45` 30` .False *VarA *VarB *VarC 0` )
-    Wait 30`
-    
-    Call SpeakToPlayer ( .NpcID:Luigi 00820014 00820004 00000000 002F0000 )
-    
-    Wait 20`
-    
-    Call SetNpcAnimation ( .NpcID:Luigi 0082000C )
-    
-    % Call DisablePlayerInput ( .False )
-    
-    Return
-    End
+#new:Script $Script_Interact_Luigi {
+	% talkAnim - AAAABBCC - luigi (0x82), palette 00, animation 14
+	% idleAnim - AAAABBCC - luigi (0x82), palette 00, animation 04
+	% stringID - AAAABBBB - my mod strings (0x2F), string 0
+	Call DisablePlayerInput ( .True )
+	
+	Call GetPlayerPos ( *VarA *VarB *VarC )
+	Call ShowEmote ( 00000000 .Emote:Exclamation -45` 30` .False *VarA *VarB *VarC 0` )
+	Wait 30`
+	
+	Call SpeakToPlayer ( .NpcID:Luigi 00820014 00820004 00000000 002F0000 )
+	
+	Wait 20`
+	
+	Call SetNpcAnimation ( .NpcID:Luigi 0082000C )
+	
+	Wait 20`
+	
+	Call StartBattle ( )
+	
+	Return
+	End
+}
+
+#new:Script $Script_Defeat_Luigi {
+	Call DisablePlayerInput .False
+	Call DisablePlayerInput ( .False
+	Call DoNpcDefeat (
+	Return
+	End
 }
 
 #new:NpcGroup $NpcGroup_Luigi
 {
-    .NpcID:Luigi $NpcSettings_Luigi ~Vec3f:Luigi
-    00000D01 $Script_Init_Luigi 0 0 0
-    ~NoDrops
-    ~Movement:Luigi
-    ~AnimationTable:Luigi
-    00000000 00000000 00000000 00000000 % no tattle string
+	.NpcID:Luigi $NpcSettings_Luigi ~Vec3f:Luigi
+	00002D01  $Script_Init_Luigi 0 0 0
+	~NoDrops
+	~Movement:Luigi
+	~AnimationTable:Luigi
+	00000000 00000000 00000000 00000000 % no tattle string
 }
 
 #new:NpcGroupList $NpcGroupList {
-    00000001 $NpcGroup_Luigi 00000000
-    00000000 00000000 00000000
+	00000001 $NpcGroup_Luigi 05190000
+	00000000 00000000 00000000
 }
