@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Map name="waa_bt02" textures="nok_tex">
+<Map name="waa_bt02" author="unnamed" textures="arn_tex">
 	<Editor>
-		<Camera pos="-7.671221,134.443283,131.074036" pitch="31.680002" yaw="17.599915"/>
+		<Camera pos="-8.055441,136.424240,267.290741" pitch="19.040049" yaw="359.199860"/>
 		<Camera pos="-21.000000,65536.000000,-7.000000"/>
 		<Camera pos="65536.000000,80.000000,-7.000000"/>
 		<Camera pos="-21.000000,80.000000,65536.000000"/>
@@ -103,7 +103,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="waku1" id="23" dumped="true" fileOffset="67D4"/>
-			<ShapeMesh ver="3" texture="nok_frametif">
+			<ShapeMesh ver="3" texture="arn_doa2tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -137,7 +137,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="yuka" id="22" dumped="true" fileOffset="674C"/>
-			<ShapeMesh ver="3" texture="nok_green_etif">
+			<ShapeMesh ver="3" texture="arn_doa2tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -171,7 +171,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="o306" id="21" dumped="true" fileOffset="66C4"/>
-			<ShapeMesh ver="3" texture="nok_kusatif">
+			<ShapeMesh ver="3" texture="arn_doa2tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -197,7 +197,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="hap" id="20" dumped="true" fileOffset="663C"/>
-			<ShapeMesh ver="3" texture="nok_temae1tif">
+			<ShapeMesh ver="3" texture="arn_doa2tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFBFF,0"/>
@@ -301,7 +301,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="ha3" id="1F" dumped="true" fileOffset="65B4"/>
-			<ShapeMesh ver="3" texture="nok_hapa34tif">
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -339,7 +339,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa3" id="1E" dumped="true" fileOffset="652C"/>
-			<ShapeMesh ver="3" texture="nok_kishikakutif">
+			<ShapeMesh ver="3" texture="arn_doa2tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -379,7 +379,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h12" id="1C" dumped="true" fileOffset="63EC"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -515,7 +515,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h10" id="1A" dumped="true" fileOffset="62DC"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -583,7 +583,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h9" id="19" dumped="true" fileOffset="6254"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -719,7 +719,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h6" id="17" dumped="true" fileOffset="6144"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -787,7 +787,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h5" id="16" dumped="true" fileOffset="60BC"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -855,7 +855,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h4" id="15" dumped="true" fileOffset="6034"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -923,7 +923,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h3" id="14" dumped="true" fileOffset="5FAC"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -991,7 +991,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="h1" id="13" dumped="true" fileOffset="5F24"/>
-			<ShapeMesh ver="3" texture="">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -1081,7 +1081,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="waku2" id="11" dumped="true" fileOffset="5DD0"/>
-			<ShapeMesh ver="3" texture="nok_miki4tif">
+			<ShapeMesh ver="3" texture="arn_doatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -1119,7 +1119,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa2" id="10" dumped="true" fileOffset="5D48"/>
-			<ShapeMesh ver="3" texture="nok_midori03tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFBFF,0"/>
@@ -1165,7 +1165,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="o339" id="E" dumped="true" fileOffset="5C24"/>
-			<ShapeMesh ver="3" texture="nok_g_and_btif">
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -1247,7 +1247,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="o336" id="C" dumped="true" fileOffset="5B14"/>
-			<ShapeMesh ver="3" texture="nok_g_and_btif">
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -1291,7 +1291,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa4" id="B" dumped="true" fileOffset="5A8C"/>
-			<ShapeMesh ver="3" texture="nok_back_2tif">
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -1496,7 +1496,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa5" id="A" dumped="true" fileOffset="5A04"/>
-			<ShapeMesh ver="3" texture="nok_back_2tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -1696,7 +1696,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="ha1_2" id="9" dumped="true" fileOffset="597C"/>
-			<ShapeMesh ver="3" texture="nok_hapa34tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -1826,7 +1826,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="ha1" id="8" dumped="true" fileOffset="58F4"/>
-			<ShapeMesh ver="3" texture="nok_hapa34tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -1914,7 +1914,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="miki" id="7" dumped="true" fileOffset="586C"/>
-			<ShapeMesh ver="3" texture="nok_miki4tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -1948,7 +1948,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="ha2_2" id="6" dumped="true" fileOffset="57E4"/>
-			<ShapeMesh ver="3" texture="nok_hapa34tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -2137,7 +2137,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa1" id="4" dumped="true" fileOffset="56D4"/>
-			<ShapeMesh ver="3" texture="nok_back_2tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -2338,7 +2338,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="waku" id="3" dumped="true" fileOffset="564C"/>
-			<ShapeMesh ver="3" texture="nok_frametif">
+			<ShapeMesh ver="3" texture="arn_doatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -2370,7 +2370,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa7" id="2" dumped="true" fileOffset="55C4"/>
-			<ShapeMesh ver="3" texture="nok_back_2tif">
+			<ShapeMesh ver="3" texture="arn_doatif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -2479,7 +2479,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="kusa6" id="1" dumped="true" fileOffset="553C"/>
-			<ShapeMesh ver="3" texture="nok_back_2tif">
+			<ShapeMesh ver="3" texture="arn_grayframetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9DDFFFF,0"/>
@@ -2613,7 +2613,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="yuka2" id="0" dumped="true" fileOffset="54B4"/>
-			<ShapeMesh ver="3" texture="nok_green_etif">
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -2648,7 +2648,7 @@
 			<HitObject type="GROUP"/>
 		</Collider>
 		<Collider ver="0" flags="0">
-			<MapObject name="yuka" id="0" dumped="true" fileOffset="58"/>
+			<MapObject name="yuka" id="0" hidden="true" dumped="true" fileOffset="58"/>
 			<HitObject type="HIT"/>
 			<HitMesh ver="0">
 				<TriangleBatch ver="0">

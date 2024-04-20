@@ -506,7 +506,7 @@
 	"waa_bt01_hit"
 	$Script_BeforeBattle_Luimgi
 	$Script_AfterBattle_Luimgi
-	"sam_bg"
+	"hos_bg"
 	$ForegroundModelList_Luimgi
 	00000000
 	00000000
@@ -514,9 +514,7 @@
 }
 
 #new:ForegroundModelList $ForegroundModelList_Luimgi {
-	~Model:waa_bt01:ha3
 	~Model:waa_bt01:hap
-	~Model:waa_bt01:kusa3
 	00000000
 }
 
@@ -533,7 +531,7 @@
 % Custom Formation
 
 #new:Stage $Stage_abc {
-	"nok_tex"
+	"arn_tex"
 	"waa_bt02_shape"
 	"waa_bt02_hit"
 	$Script_BeforeBattle_Luimgi
@@ -571,7 +569,7 @@
 	$SJIS_8022BC1C 00000002 $Formation_16 $Stage_8022BAEC 00000000
 	$SJIS_8022BC0C 00000004 $Formation_17 $Stage_8022BAEC 00000000
 	$SJIS_8022BC00 00000001 $Formation_18 $Stage_8022BAEC 00000000
-	$SJIS_Formation_19 00000001 $Formation_19 $Stage_abc 00000000
+	$SJIS_Formation_19 00000001 $Formation_19 $Stage_Luimgi 00000000
 	00000000 00000000 00000000 00000000 00000000
 }
 
