@@ -514,11 +514,51 @@
 }
 
 #new:ForegroundModelList $ForegroundModelList_Luimgi {
-	~Model:waa_bt01:hap
 	00000000
 }
 
 #new:Script $Script_BeforeBattle_Luimgi {
+	% VarA - shooting star model group, VarB - speed
+	Set *VarA ~Model:waa_bt01:Shooting0
+	Set *VarB 8`
+	Exec $Script_MoveShootingStar
+	
+	Set *VarA ~Model:waa_bt01:Shooting1
+	Set *VarB 8`
+	Exec $Script_MoveShootingStar
+	
+	Return
+	End
+}
+
+#new:Script $Script_MoveShootingStar
+{
+	Wait 30`
+	Loop
+		% Decide every frame randomly if it should fall down
+		Loop
+			Call RandInt ( 1000` *Var2 )
+			If *Var2 == 1`
+				BreakLoop
+			EndIf
+			Wait 1`
+		EndLoop
+		
+		% TODO: play shooting star sound?
+		
+		% Set starting position
+		Call RandInt ( 380` *Var0 )
+		Sub *Var0 280`
+		Set *Var1 0`
+		
+		% Fall down
+		Loop 120`
+			Add *Var0 *VarB
+			Sub *Var1 *VarB
+			Call  TranslateGroup ( *VarA *Var0 *Var1 0` )
+			Wait 1`
+		EndLoop
+	EndLoop
 	Return
 	End
 }
