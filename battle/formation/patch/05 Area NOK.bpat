@@ -498,7 +498,52 @@
 	End
 }
 
+% Custom Stage
+
+#new:Stage $Stage_Luimgi {
+	"arn_tex"
+	"waa_bt01_shape"
+	"waa_bt01_hit"
+	$Script_BeforeBattle_Luimgi
+	$Script_AfterBattle_Luimgi
+	"sam_bg"
+	$ForegroundModelList_Luimgi
+	00000000
+	00000000
+	00000000
+}
+
+#new:ForegroundModelList $ForegroundModelList_Luimgi {
+	~Model:waa_bt01:ha3
+	~Model:waa_bt01:hap
+	~Model:waa_bt01:kusa3
+	00000000
+}
+
+#new:Script $Script_BeforeBattle_Luimgi {
+	Return
+	End
+}
+
+#new:Script $Script_AfterBattle_Luimgi {
+	Return
+	End
+}
+
 % Custom Formation
+
+#new:Stage $Stage_abc {
+	"nok_tex"
+	"waa_bt02_shape"
+	"waa_bt02_hit"
+	$Script_BeforeBattle_Luimgi
+	$Script_AfterBattle_8022BACC
+	"nok_bg"
+	$ForegroundModelList_8022BADC
+	00000000
+	00000000
+	00000000
+}
 
 @ $FormationTable {
 	$SJIS_8022BE10 00000002 $Formation_00 $Stage_8022BAEC 00000000
@@ -526,7 +571,7 @@
 	$SJIS_8022BC1C 00000002 $Formation_16 $Stage_8022BAEC 00000000
 	$SJIS_8022BC0C 00000004 $Formation_17 $Stage_8022BAEC 00000000
 	$SJIS_8022BC00 00000001 $Formation_18 $Stage_8022BAEC 00000000
-	$SJIS_Formation_19 00000001 $Formation_19 $Stage_8022BAEC 00000000
+	$SJIS_Formation_19 00000001 $Formation_19 $Stage_abc 00000000
 	00000000 00000000 00000000 00000000 00000000
 }
 
