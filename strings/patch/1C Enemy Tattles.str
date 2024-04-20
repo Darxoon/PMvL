@@ -1,0 +1,12 @@
+#message:1C:096
+{
+	[Style Right]
+	This is Luigi, your brother. He[br]
+	seems different than how he was[br]
+	before he went on his moon[br]
+	expedition.[br]
+	[Wait][Next]
+	I wonder what happened to him[br]
+	there.[br]
+	[Wait][End]
+}

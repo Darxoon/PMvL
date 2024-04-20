@@ -6,6 +6,8 @@
 #define .Animation:Jumping 0082000D
 #define .Animation:Falling 0082000E
 #define .Animation:Hit 0082000F
+#define .Animation:OpeningLetter 00820018
+#define .Animation:ReadingLetter 00820019
 
 #new:Actor $Luigi
 {
@@ -17,7 +19,7 @@
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
 	% ai
-	[PartsCount]    1`s
+	[PartsCount]    3`s
 	[PartsTable]  $PartsTable_Luigi
 	[Script]      $Script_Init_Luigi
 	% move effectiveness
@@ -36,7 +38,9 @@
 }
 
 #new:PartsTable $PartsTable_Luigi {
-	00800000 01000000 001400FF $IdleAnimations_Luigi $DefenseTable_Luigi 00000000 00000000 00F60000 00000000
+	00800000 01000000 002C00FF $IdleAnimations_Luigi $DefenseTable_Luigi 00000000 00000000 00F60000 00000000
+	00120001 02000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
+	00120001 03000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
 }
 
 #new:IdleAnimations $IdleAnimations_Luigi {
@@ -55,6 +59,17 @@
 	.Element:End
 }
 
+#new:IdleAnimations $IdleAnimations_Projectile {
+	.Status:Normal    003D000B
+	.Status:End
+}
+
+#new:DefenseTable $DefenseTable_Projectile {
+	.Element:Normal 00000000
+	.Element:Shock  00000000
+	.Element:End
+}
+
 #new:Script $Script_Init_Luigi {
 	Call BindTakeTurn ( .Actor:Self $Script_TakeTurn_Luigi )
 	Call BindIdle ( .Actor:Self $Script_Idle_Luigi )
@@ -64,6 +79,14 @@
 }
 
 #new:Script $Script_TakeTurn_Luigi {
+	% Call RandInt ( 1 *Var0 )
+	% Set *MB_debug *Var0
+	ExecWait $Script_Luigi_Thunder
+	Return
+	End
+}
+
+#new:Script $Script_Luigi_Jump {
 	Call UseIdleAnimation  ( .Actor:Self .False )
 	Call EnableIdleScript  ( .Actor:Self 00000000 )
 	Call SetTargetActor    ( .Actor:Self .Actor:Player )
@@ -209,6 +232,101 @@
 	EndSwitch
 	Call  EnableIdleScript  ( .Actor:Self 00000001 )
 	Call  UseIdleAnimation  ( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_Luigi_Thunder {
+	% Preparation
+	Call UseIdleAnimation ( .Actor:Self .False )
+	Call EnableIdleScript ( .Actor:Self .False )
+	Call SetTargetActor    ( .Actor:Self .Actor:Player )
+	Call UseBattleCamPreset    ( 0000003F )
+	Call BattleCamTargetActor  ( .Actor:Self )
+	
+	% Reading Animation & Spawning Spheres
+	Call SetAnimation ( .Actor:Self 1` .Animation:OpeningLetter )
+	Wait 16`
+	Call SetAnimation ( .Actor:Self 1` .Animation:ReadingLetter )
+	
+	Thread
+		Wait 9`
+		Call GetActorPos       ( .Actor:Self *VarA *VarB *VarC )
+		Add *VarB 30`
+		Call SetPartPos        ( .Actor:Self 2` *VarA *VarB *VarC )
+		Call SetPartFlagBits   ( .Actor:Self 2` 1` .False )
+		Call SetPartScale ( .Actor:Self 2` *Fixed[1.5] *Fixed[1.5] *Fixed[1.5] )
+		
+		Sub *VarA 15`
+		Add *VarB 40`
+		Call FlyPartTo ( .Actor:Self 2` *VarA *VarB *VarC 20` 0` .Easing:CubicOut )
+	EndThread
+	Thread
+		Wait 19`
+		Call GetActorPos       ( .Actor:Self *VarA *VarB *VarC )
+		Add *VarB 30`
+		Call SetPartPos        ( .Actor:Self 3` *VarA *VarB *VarC )
+		Call SetPartFlagBits   ( .Actor:Self 3` 1` .False )
+		Call SetPartScale ( .Actor:Self 3` *Fixed[1.5] *Fixed[1.5] *Fixed[1.5] )
+		
+		Add *VarA 15`
+		Add *VarB 40`
+		Call FlyPartTo ( .Actor:Self 3` *VarA *VarB *VarC 20` 0` .Easing:CubicOut )
+	EndThread
+	Wait 30`
+	
+	Call SetAnimation ( .Actor:Self 1` .Animation:AboutToJump )
+	Wait 30`
+	
+	% Throw Projectiles
+	Call SetGoalToTarget ( .Actor:Self )
+	Call GetGoalPos ( .Actor:Self *VarA *VarB *VarC )
+	
+	Thread
+		Wait 14`
+		
+		% Second Projectile
+		Call SetPartMoveSpeed ( .Actor:Self 3` *Fixed[12.0] )
+		Call SetPartJumpGravity ( .Actor:Self 3` *Fixed[0.001953125] )
+		Call JumpPartTo ( .Actor:Self 3` *VarA *VarB *VarC  0` .True )
+		
+		Wait 2`
+		Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000002 00000020 )
+		
+		Switch *Var0
+			CaseOR  ==  .HitResult:Hit % 0
+			CaseOR  ==  .HitResult:QuakeImmune % 2
+				Call GetPartOffset     ( .Actor:Self 3` *Var0 *Var1 *Var2 )
+				Sub *Var0  00000064
+				Call SetPartJumpGravity    ( .Actor:Self 3` *Fixed[0.7] )
+				Call JumpPartTo        ( .Actor:Self 3` *Var0  0` *Var2  30` .True )
+				Call SetPartFlagBits   ( .Actor:Self 3` 00000001 .True )
+				Call YieldTurn ( )
+			EndCaseGroup
+		EndSwitch
+	EndThread
+	
+	% First Projectile
+	Call SetPartMoveSpeed ( .Actor:Self 2` *Fixed[12.0] )
+	Call SetPartJumpGravity ( .Actor:Self 2` *Fixed[0.001953125] )
+	Call JumpPartTo ( .Actor:Self 2` *VarA *VarB *VarC  0` .True )
+	
+	Wait 2`
+	Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000002 00000020 )
+	
+	Switch *Var0
+		CaseOR  ==  .HitResult:Hit % 0
+		CaseOR  ==  .HitResult:QuakeImmune % 2
+			Call GetPartOffset     ( .Actor:Self 00000002 *Var0 *Var1 *Var2 )
+			Sub *Var0  00000064
+			Call SetPartJumpGravity    ( .Actor:Self 00000002 *Fixed[0.7] )
+			Call JumpPartTo        ( .Actor:Self 00000002 *Var0  0` *Var2  30` .True )
+			Call SetPartFlagBits   ( .Actor:Self 00000002 00000001 .True )
+		EndCaseGroup
+	EndSwitch
+	
+	Call EnableIdleScript ( .Actor:Self 00000001 )
+	Call UseIdleAnimation ( .Actor:Self .True )
 	Return
 	End
 }
