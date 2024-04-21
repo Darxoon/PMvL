@@ -3,14 +3,14 @@
 % Credit to Nine
 #new:Function $GivePlayerStartingStats {
     LIO t0, 8010F290
-    ORI t2, r0, 1E % hex for 30
-    ORI t3, r0, 1E % hex for 30
-    ORI t4, r0, 1B % hex for 27
+    ORI t2, r0, F % hex for 15
+    ORI t3, r0, 15 % hex for 21
+    ORI t4, r0, A % hex for 10
     ORI t5, r0, 1 % hex for 1
-    ORI t6, r0, 2 % hex for 2
+    % ORI t6, r0, 2 % hex for 2
     ORI t7, r0, 7 % hex for 7
-    SB t6, 0000 (t0) % set Boots
-    SB t6, 0001 (t0) % set Hammer
+    SB t5, 0000 (t0) % set Boots
+    SB t5, 0001 (t0) % set Hammer
     SB t2, 0002 (t0) % set hp
     SB t2, 0003 (t0) % max hp
     SB t2, 0004 (t0) % true max hp
@@ -21,7 +21,7 @@
     SB t4, 0009 (t0) % level
     SB t5, 000A (t0) % Lucky Star
     SB t5, 001C (t0) % Goombario Get
-    SB t6, 001D (t0) % Goombario level
+    SB t5, 001D (t0) % Goombario level
     SB t5, 0012 (t0) % Goombario out
     SB t7, 0290 (t0) 
     SB t7, 028E (t0) %star power
@@ -47,6 +47,35 @@
 	
 	If *MF_PlayerInitialized == .False
 		Call $GivePlayerStartingStats ( )
+		
+		Call AddKeyItem ( .Item:DiamondStone )
+		Call AddKeyItem ( .Item:LunarStone )
+		Call AddKeyItem ( .Item:KooperShell )
+		
+		Call AddBadge ( .Item:PowerJump 0` )
+		Call AddBadge ( .Item:MegaSmash 0` )
+		Call AddBadge ( .Item:HammerThrow 0` )
+		Call AddBadge ( .Item:PowerBounce 0` )
+		Call AddBadge ( .Item:SpinSmash 0` )
+		
+		Call AddBadge ( .Item:DamageDodgeA 0` )
+		Call AddBadge ( .Item:FlowerSaverA 0` )
+		Call AddBadge ( .Item:DeepFocus1 0` )
+		Call AddBadge ( .Item:GroupFocus 0` )
+		Call AddBadge ( .Item:HPPlusA 0` )
+		Call AddBadge ( .Item:HPPlusB 0` )
+		Call AddBadge ( .Item:FPPlusA 0` )
+		Call AddBadge ( .Item:FPPlusB 0` )
+		Call AddBadge ( .Item:PowerPlusA 0` )
+		Call AddBadge ( .Item:PowerPlusB 0` )
+		
+		Call AddBadge ( .Item:CloseCall 0` )
+		Call AddBadge ( .Item:PUpDDown 0` )
+		Call AddBadge ( .Item:PDownDUp 0` )
+		Call AddBadge ( .Item:QuickChange 0` )
+		Call AddBadge ( .Item:Refund 0` )
+		Call AddBadge ( .Item:SlowGo 0` )
+		
 		Set *MF_PlayerInitialized .True
 	EndIf
 	
