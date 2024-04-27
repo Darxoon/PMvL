@@ -4,7 +4,7 @@
 % stats
 [Index]        46b 
 [Level]        25`b 
-[MaxHP]         8`b 
+[MaxHP]         6`b 
 [Coins]         1`b 
 [Flags]       00000000 
 [StatusTable] $StatusTable_80218978_22 
@@ -173,45 +173,44 @@
 }
 
 #new:Script $Script_Init_80218A70_22 {
-    0:  Call  GetActorVar   ( .Actor:Self 00000000 *Var0 )
-   18:  Call  8027D75C      ( FFFFFF81 *Var1 )
-   2C:  If  *Var0  ==  00000001 
-   3C:  	If  *Var1  ==  00000001 
-   4C:  		Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
-   64:  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_8021887C_22 )
-   7C:  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .True )
-   98:  		Call  SetAnimation      ( .Actor:Self 00000001 00550005 )
-   B0:  	Else
-   B8:  		Call  SetActorVar       ( .Actor:Self 00000008 00000000 )
-   D0:  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_80218830_22 )
-   E8:  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .False )
-  104:  		Call  SetAnimation      ( .Actor:Self 00000001 00550004 )
-  11C:  	EndIf
-  124:  Else
-  12C:  	Call  RandInt   ( 000003E8 *Var0 )
-  140:  	If  *Var0  <  000001F4 
-  150:  		Call  SetActorVar       ( .Actor:Self 00000008 00000000 )
-  168:  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_80218830_22 )
-  180:  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .False )
-  19C:  		Call  SetAnimation      ( .Actor:Self 00000001 00550004 )
-  1B4:  	Else
-  1BC:  		Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
-  1D4:  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_8021887C_22 )
-  1EC:  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .True )
-  208:  		Call  SetAnimation      ( .Actor:Self 00000001 00550005 )
-  220:  	EndIf
-  228:  EndIf
-  230:  EndIf
-  238:  Call  8027D4C8      ( FFFFFF81 00000001 00000000 FFFFFFF8 )
-  254:  Call  SetTargetOffset   ( .Actor:Self 00000001  -3`  21` )
-  270:  Call  SetActorFlagBits  ( .Actor:Self 00000800 .False )
-  288:  Call  BindIdle      ( .Actor:Self $Script_Idle_80218D6C_22 )
-  29C:  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_80218D7C_22 )
-  2B0:  Call  BindTakeTurn  ( .Actor:Self $Script_TakeTurn_80219110_22 )
-  2C4:  Call  HPBarToHome   ( .Actor:Self )
-  2D4:  Call  SetActorVar   ( .Actor:Self 00000001 00000000 )
-  2EC:  Return
-  2F4:  End
+  Call  GetActorVar   ( .Actor:Self 00000000 *Var0 )
+  Call  8027D75C      ( FFFFFF81 *Var1 )
+  If  *Var0  ==  00000001 
+  	If  *Var1  ==  00000001 
+  		Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
+  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_8021887C_22 )
+  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .True )
+  		Call  SetAnimation      ( .Actor:Self 00000001 00550005 )
+  	Else
+  		Call  SetActorVar       ( .Actor:Self 00000008 00000000 )
+  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_80218830_22 )
+  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .False )
+  		Call  SetAnimation      ( .Actor:Self 00000001 00550004 )
+  	EndIf
+  Else
+  	Call  RandInt   ( 000003E8 *Var0 )
+  	If  *Var0  <  000001F4 
+  		Call  SetActorVar       ( .Actor:Self 00000008 00000000 )
+  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_80218830_22 )
+  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .False )
+  		Call  SetAnimation      ( .Actor:Self 00000001 00550004 )
+  	Else
+  		Call  SetActorVar       ( .Actor:Self 00000008 00000001 )
+  		Call  SetIdleAnimations ( .Actor:Self 00000001 $IdleAnimations_8021887C_22 )
+  		Call  SetPartEventBits  ( .Actor:Self 00000001 00000010 .True )
+  		Call  SetAnimation      ( .Actor:Self 00000001 00550005 )
+  	EndIf
+  EndIf
+  Call  8027D4C8      ( FFFFFF81 00000001 00000000 FFFFFFF8 )
+  Call  SetTargetOffset   ( .Actor:Self 00000001  -3`  21` )
+  Call  SetActorFlagBits  ( .Actor:Self 00000800 .False )
+  Call  BindIdle      ( .Actor:Self $Script_Idle_80218D6C_22 )
+  Call  BindHandleEvent   ( .Actor:Self $Script_HandleEvent_80218D7C_22 )
+  Call  BindTakeTurn  ( .Actor:Self $Script_TakeTurn_80219110_22 )
+  Call  HPBarToHome   ( .Actor:Self )
+  Call  SetActorVar   ( .Actor:Self 00000001 00000000 )
+  Return
+  End
 }
 
 #new:Script $Script_Idle_80218D6C_22 {
@@ -458,7 +457,7 @@
   264:  Label  64
   270:  Call  PlaySoundAtActor  ( .Actor:Self 000020D3 )
   284:  Call  SetActorSounds    ( .Actor:Self .ActorSound:Walk 00000000 00000000 )
-  2A0:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000003 00000010 )
+  2A0:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000002 00000010 )
   2C4:  Switch  *Var0 
   2D0:  	CaseOR  ==  .HitResult:Miss % 6
   2DC:  	CaseOR  ==  .HitResult:Lucky % 5
@@ -496,7 +495,7 @@
   534:  Call  RunToGoal ( .Actor:Self  0` .False )
   54C:  Call  ResetAllActorSounds   ( .Actor:Self )
   55C:  Wait  2`
-  568:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000003 00000020 )
+  568:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000002 00000020 )
   590:  Switch  *Var0 
   59C:  	CaseOR  ==  .HitResult:Hit % 0
   5A8:  	CaseOR  ==  .HitResult:QuakeImmune % 2
@@ -707,7 +706,7 @@
   3A4:  EndThread
   3AC:  Call  PlaySoundAtActor  ( .Actor:Self 000020D3 )
   3C0:  Call  SetActorSounds    ( .Actor:Self .ActorSound:Walk 00000000 00000000 )
-  3DC:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000005 00000010 )
+  3DC:  Call  EnemyTestTarget   ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000003 00000010 )
   400:  Switch  *Var0 
   40C:  	CaseOR  ==  .HitResult:Miss % 6
   418:  	CaseOR  ==  .HitResult:Lucky % 5
@@ -811,7 +810,7 @@
   AF4:  Call  JumpToGoal    ( .Actor:Self  10` .False .True .False )
   B14:  Call  ResetAllActorSounds   ( .Actor:Self )
   B24:  Wait  2`
-  B30:  Call  EnemyDamageTarget     ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000005 00000020 )
+  B30:  Call  EnemyDamageTarget     ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000003 00000020 )
   B58:  Switch  *Var0 
   B64:  	CaseOR  ==  .HitResult:Hit % 0
   B70:  	CaseOR  ==  .HitResult:QuakeImmune % 2

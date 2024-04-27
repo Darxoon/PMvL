@@ -1,4 +1,5 @@
-#message:2F:000 {
+#message:2F:000
+{
 	[Style Right]
 	[Pause:20]Oh, so you decided to come[br]
 	after all?[br]
@@ -8,3 +9,44 @@
 	[Wait][End]
 }
 
+#message:2F:001
+{
+	[Style Right]
+	Let's see what you have to[br]
+	offer.[br]
+	[Wait][End]
+}
+
+#message:2F:002
+{
+	[Style Right]
+	Noooo! This can't be true!![br]
+	What happened to the curse[br]
+	I put on you?![br]
+	[Wait][End]
+}
+
+#message:2F:003
+{
+	[Style Right]
+	Is this[Pause:5].[Pause:5].[Pause:5].[Pause:5] it? What have we[br]
+	done to him?![br]
+	[Wait][End]
+}
+
+#message:2F:004
+{
+	[Style Right]
+	It's not over! Prepare for [Pause:8][PrintRising]THIS[/fx]:[br]
+	Luigi descending back from[br]
+	Heaven!![br]
+	[Wait][End]
+}
+
+#message:2F:005
+{
+	[Style Right]
+	I've been going easy on you[br]
+	until now![br]
+	[Wait][End]
+}

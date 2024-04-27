@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="waa_01" author="unnamed" background="sam_bg" textures="arn_tex">
 	<Editor>
-		<Camera pos="51.399837,60.084980,139.346527" pitch="16.959991" yaw="348.960144"/>
+		<Camera pos="-288.795502,186.389740,693.463806" pitch="-5.600028" yaw="16.160278"/>
 		<Camera pos="0.000000,65536.000000,0.000000"/>
 		<Camera pos="65536.000000,-50.000000,-7.496218"/>
 		<Camera pos="0.000000,-150.634903,65536.000000"/>
 	</Editor>
 	<ModelTree>
-		<Node name="Root" id="F">
+		<Node name="Root" id="9">
 			<Node name="Stage" id="2">
 				<Node name="main_floor" id="0"/>
 				<Node name="main_edges" id="1"/>
 			</Node>
-			<Node name="Exit_North" id="5">
-				<Node name="ex_n_floor" id="3"/>
-				<Node name="ex_n_edge" id="4"/>
-			</Node>
-			<Node name="Exit_East" id="8">
-				<Node name="ex_e_floor" id="6"/>
-				<Node name="ex_e_edge" id="7"/>
-			</Node>
-			<Node name="Exit_South" id="B">
-				<Node name="ex_s_floor" id="9"/>
-				<Node name="ex_s_edge" id="A"/>
-			</Node>
-			<Node name="Exit_West" id="E">
-				<Node name="ex_w_floor" id="C"/>
-				<Node name="ex_w_edge" id="D"/>
+			<Node name="Exit_North" id="3"/>
+			<Node name="Exit_East" id="4"/>
+			<Node name="Exit_South" id="5"/>
+			<Node name="Exit_West" id="8">
+				<Node name="ex_w_floor" id="6"/>
+				<Node name="ex_w_edge" id="7"/>
 			</Node>
 		</Node>
 	</ModelTree>
@@ -77,13 +68,13 @@
 	</LightSets>
 	<Models>
 		<Model ver="2" type="ROOT" lightset="0">
-			<MapObject name="Root" id="F"/>
+			<MapObject name="Root" id="9"/>
 			<BoundingBox empty="false" min="-600,-100,-600" max="600,0,600"/>
 			<PropertyList>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="Exit_West" id="E"/>
+			<MapObject name="Exit_West" id="8"/>
 			<BoundingBox empty="false" min="-600,-20,-50" max="-500,0,50"/>
 			<PropertyList>
 				<Property v="60,0,0"/>
@@ -91,8 +82,8 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_w_edge" id="D"/>
-			<ShapeMesh ver="3" texture="kmr_berosaidetif">
+			<MapObject name="ex_w_edge" id="7"/>
+			<ShapeMesh ver="3" texture="arn_berosaidetif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -129,8 +120,8 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_w_floor" id="C"/>
-			<ShapeMesh ver="3" texture="kmr_green_etif">
+			<MapObject name="ex_w_floor" id="6"/>
+			<ShapeMesh ver="3" texture="arn_iwa_4tif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>
@@ -155,219 +146,27 @@
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="Exit_South" id="B"/>
-			<BoundingBox empty="false" min="-50,-20,500" max="50,0,600"/>
+			<MapObject name="Exit_South" id="5"/>
+			<BoundingBox empty="true" min="-50,-20,500" max="50,0,600"/>
 			<PropertyList>
 				<Property v="60,0,0"/>
 				<Property v="60,0,1"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_edge" id="A"/>
-			<ShapeMesh ver="3" texture="kmr_berosaidetif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="50,-20,600" uv="2560,0"/>
-							<Vertex xyz="50,0,600" uv="2560,512"/>
-							<Vertex xyz="-50,0,600" uv="0,512"/>
-							<Vertex xyz="-50,-20,600"/>
-							<Vertex xyz="-50,-20,600"/>
-							<Vertex xyz="-50,0,600" uv="0,512"/>
-							<Vertex xyz="-50,0,500" uv="2560,512"/>
-							<Vertex xyz="-50,-20,520" uv="2048,0"/>
-							<Vertex xyz="50,0,500" uv="-2048,512"/>
-							<Vertex xyz="50,0,600" uv="512,512"/>
-							<Vertex xyz="50,-20,600" uv="512,0"/>
-							<Vertex xyz="50,-20,520" uv="-1536,0"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-							<Triangle ijk="4,5,6"/>
-							<Triangle ijk="4,6,7"/>
-							<Triangle ijk="8,9,10"/>
-							<Triangle ijk="8,10,11"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_s_floor" id="9"/>
-			<ShapeMesh ver="3" texture="kmr_green_etif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="50,0,500" uv="-4320,592"/>
-							<Vertex xyz="-50,0,500" uv="-4320,-208"/>
-							<Vertex xyz="-50,0,600" uv="-5120,-208"/>
-							<Vertex xyz="50,0,600" uv="-5120,592"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="Exit_East" id="8"/>
-			<BoundingBox empty="false" min="500,-20,-50" max="600,0,50"/>
+			<MapObject name="Exit_East" id="4"/>
+			<BoundingBox empty="true" min="500,-20,-50" max="600,0,50"/>
 			<PropertyList>
 				<Property v="60,0,0"/>
 				<Property v="60,0,1"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_e_edge" id="7"/>
-			<ShapeMesh ver="3" texture="kmr_berosaidetif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="600,-20,-50" uv="2560,0"/>
-							<Vertex xyz="600,0,-50" uv="2560,512"/>
-							<Vertex xyz="600,0,50" uv="0,512"/>
-							<Vertex xyz="600,-20,50"/>
-							<Vertex xyz="600,-20,50"/>
-							<Vertex xyz="600,0,50" uv="0,512"/>
-							<Vertex xyz="500,0,50" uv="2560,512"/>
-							<Vertex xyz="520,-20,50" uv="2048,0"/>
-							<Vertex xyz="500,0,-50" uv="-2048,512"/>
-							<Vertex xyz="600,0,-50" uv="512,512"/>
-							<Vertex xyz="600,-20,-50" uv="512,0"/>
-							<Vertex xyz="520,-20,-50" uv="-1536,0"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-							<Triangle ijk="4,5,6"/>
-							<Triangle ijk="4,6,7"/>
-							<Triangle ijk="8,9,10"/>
-							<Triangle ijk="8,10,11"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_e_floor" id="6"/>
-			<ShapeMesh ver="3" texture="kmr_green_etif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="500,0,-50" uv="80,4192"/>
-							<Vertex xyz="500,0,50" uv="-720,4192"/>
-							<Vertex xyz="600,0,50" uv="-720,4992"/>
-							<Vertex xyz="600,0,-50" uv="80,4992"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
-			<MapObject name="Exit_North" id="5"/>
-			<BoundingBox empty="false" min="-50,-20,-600" max="50,0,-500"/>
+			<MapObject name="Exit_North" id="3"/>
+			<BoundingBox empty="true" min="-50,-20,-600" max="50,0,-500"/>
 			<PropertyList>
 				<Property v="60,0,0"/>
 				<Property v="60,0,1"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_n_edge" id="4"/>
-			<ShapeMesh ver="3" texture="kmr_berosaidetif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="-50,-20,-600"/>
-							<Vertex xyz="-50,0,-600" uv="0,512"/>
-							<Vertex xyz="50,0,-600" uv="2560,512"/>
-							<Vertex xyz="50,-20,-600" uv="2560,0"/>
-							<Vertex xyz="-50,0,-500" uv="2560,512"/>
-							<Vertex xyz="-50,0,-600" uv="0,512"/>
-							<Vertex xyz="-50,-20,-600"/>
-							<Vertex xyz="-50,-20,-520" uv="2048,0"/>
-							<Vertex xyz="50,-20,-600" uv="512,0"/>
-							<Vertex xyz="50,0,-600" uv="512,512"/>
-							<Vertex xyz="50,0,-500" uv="-2048,512"/>
-							<Vertex xyz="50,-20,-520" uv="-1536,0"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-							<Triangle ijk="4,5,6"/>
-							<Triangle ijk="4,6,7"/>
-							<Triangle ijk="8,9,10"/>
-							<Triangle ijk="8,10,11"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
-			</PropertyList>
-		</Model>
-		<Model ver="2" type="MODEL" lightset="0">
-			<MapObject name="ex_n_floor" id="3"/>
-			<ShapeMesh ver="3" texture="kmr_green_etif">
-				<DisplayList>
-					<F3DEX2 cmd="E7000000,0"/>
-					<F3DEX2 cmd="D9FDFFFF,0"/>
-					<F3DEX2 cmd="D9FFFFFF,200400"/>
-					<TriangleBatch ver="0">
-						<VertexTable>
-							<Vertex xyz="50,0,-600" uv="4480,592"/>
-							<Vertex xyz="-50,0,-600" uv="4480,-208"/>
-							<Vertex xyz="-50,0,-500" uv="3680,-208"/>
-							<Vertex xyz="50,0,-500" uv="3680,592"/>
-						</VertexTable>
-						<TriangleList>
-							<Triangle ijk="0,1,2"/>
-							<Triangle ijk="0,2,3"/>
-						</TriangleList>
-					</TriangleBatch>
-				</DisplayList>
-			</ShapeMesh>
-			<PropertyList>
-				<Property v="5C,0,1"/>
-				<Property v="5F,0,0"/>
 			</PropertyList>
 		</Model>
 		<Model ver="2" type="GROUP" lightset="0">
@@ -380,7 +179,7 @@
 		</Model>
 		<Model ver="2" type="MODEL" lightset="0">
 			<MapObject name="main_edges" id="1"/>
-			<ShapeMesh ver="3" texture="kmr_frametif">
+			<ShapeMesh ver="3" texture="arn_frametif">
 				<DisplayList>
 					<F3DEX2 cmd="E7000000,0"/>
 					<F3DEX2 cmd="D9FDFFFF,0"/>

@@ -2,3 +2,8 @@
 {
 	Luigi[End]
 }
+
+#string:29:084
+{
+	Luigi?[End]
+}

@@ -10,3 +10,32 @@
 	there.[br]
 	[Wait][End]
 }
+
+#message:1C:097
+{
+	[Style Right]
+	This is still Luigi, your brother,[br]
+	although he seems to be dead?[br][Wait]
+	I feel so guilty now.[br]
+	[Wait][End]
+}
+
+#string:1C:062
+{
+	[Style Right]
+	It's a Bony Beetle.[BR]
+	[Pause 10]They're bony Buzzy Beetles.[BR]
+	...Hence the name.[BR]
+	[Wait][Next]
+	Max HP: 6, Attack Power: 2,[BR]
+	Defense Power: 4[BR]
+	[Pause 10]It's tough to damage 'em.[BR]
+	[Wait][Next]
+	When their spikes are out,[BR]
+	their attack power is 4.[BR]
+	[Wait][Next]
+	When they retract their spikes,[BR]
+	take the opportunity to flip[BR]
+	'em over. After that, beating[BR]
+	'em will be a breeze.[Wait][End]
+}

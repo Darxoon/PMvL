@@ -1,5 +1,8 @@
+#import enemy/22_BonyBeetle.bpat
+
 % Luigi (Actor)
 
+#define .Animation:Sitting 00820007
 #define .Animation:Idle 00820008
 #define .Animation:Running 0082000A
 #define .Animation:AboutToJump 0082000C
@@ -13,13 +16,14 @@
 {
 	% stats
 	[Index]         D4b
-	[Level]         5`b
-	[MaxHP]         30`b
+	[Level]         40`b
+	% [MaxHP]         30`b
+	[MaxHP]         2`b
 	[Coins]         1`b
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
 	% ai
-	[PartsCount]    3`s
+	[PartsCount]    4`s
 	[PartsTable]  $PartsTable_Luigi
 	[Script]      $Script_Init_Luigi
 	% move effectiveness
@@ -28,7 +32,7 @@
 	[AirLift]     100`b
 	[Hurricane]    90`b % Bow's "Spook" as well
 	[UpAndAway]    95`b
-	[PowerBounce] 100`b
+	[PowerBounce] 80`b
 	[SpinSmash]     0`b % weight (0-4)
 	% ui positions
 	[Size]         24`b  24`b % width height
@@ -73,15 +77,35 @@
 #new:Script $Script_Init_Luigi {
 	Call BindTakeTurn ( .Actor:Self $Script_TakeTurn_Luigi )
 	Call BindIdle ( .Actor:Self $Script_Idle_Luigi )
+	Call BindNextTurn ( .Actor:Self $Script_NextTurn_Luigi )
 	Call BindHandleEvent ( .Actor:Self $Script_HandleEvent_Luigi )
+	
+	Call SetActorVar ( .Actor:Self 0` 0` ) % Var 0: next attack - 0`: jump, 1`: thunder
+	Call SetActorVar ( .Actor:Self 1` .False ) % Var 1: held speech at very start - .False, .True
+	Return
+	End
+}
+
+#new:Script $Script_NextTurn_Luigi {
+	Call GetActorVar ( .Actor:Self 1` *Var0 )
+	If *Var0 == .False
+		Call ActorSpeak ( 002F0001 .Actor:Self 1` 00820014 00820004 )
+		Call SetActorVar ( .Actor:Self 1` .True )
+	EndIf
 	Return
 	End
 }
 
 #new:Script $Script_TakeTurn_Luigi {
-	% Call RandInt ( 1 *Var0 )
-	% Set *MB_debug *Var0
-	ExecWait $Script_Luigi_Thunder
+	Call GetActorVar ( .Actor:Self 0` *Var0 )
+	
+	If *Var0 == 0`
+		Call SetActorVar ( .Actor:Self 0` 1` )
+		ExecWait $Script_Luigi_Jump
+	Else
+		Call SetActorVar ( .Actor:Self 0` 0` )
+		ExecWait $Script_Luigi_Thunder
+	EndIf
 	Return
 	End
 }
@@ -381,6 +405,26 @@
 	End
 }
 
+#new:Vector3D $Vector3D_Home0
+{
+	205` 0` -20`
+}
+
+#new:Vector3D $Vector3D_Home1
+{
+	245` 0` -5`
+}
+
+#new:SpecialFormation $SpecialFormation_BonyBeetle0
+{
+	$22_BonyBeetle $Vector3D_Home0 12` 00000000 00000000 00000000 00000000
+}
+
+#new:SpecialFormation $SpecialFormation_BonyBeetle1
+{
+	$22_BonyBeetle $Vector3D_Home1 11` 00000000 00000000 00000000 00000000
+}
+
 #new:Script $Script_HandleEvent_Luigi {
 	Call  UseIdleAnimation  ( .Actor:Self .False )
 	Call  EnableIdleScript  ( .Actor:Self 00000000 )
@@ -455,12 +499,91 @@
 		EndCaseGroup
 		Case  ==  .Event:Death % 20
 			SetConst  *Var0  00000001
-			SetConst  *Var1  00260005
+			SetConst  *Var1  .Animation:Hit
 			ExecWait  DoNormalHit
 			Wait  10`
+			Call ActorSpeak ( 002F0002 .Actor:Self 1` 00820014 00820004 )
+			Wait 10`
 			SetConst  *Var0  00000001
-			SetConst  *Var1  00260006
-			ExecWait  DoDeath
+			SetConst  *Var1  .Animation:Falling
+			ExecWait  8029AF08 % DoDeath without remove - or EVS_Enemy_DeathWithoutRemove in decomp
+			
+			% Make luigi have a seizure (idk why this happens but it's funny)
+			% Call MakeLerp ( 230` 0` 300` .Easing:Linear )
+			% Loop
+			% 	Call  UpdateLerp ( )
+			% 	Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
+			% 	Call SetActorPos ( .Actor:Self *VarA *Var0 *VarC )
+			% 	Wait  1`
+			% 	If  *Var1  ==  .False 
+			% 		BreakLoop
+			% 	EndIf
+			% EndLoop
+			
+			Call UseBattleCamPreset ( 2` ) % because 2` = default for some reason
+			
+			Wait 20`
+			
+			Call UseIdleAnimation ( .Actor:Partner .False )
+			Call ActorSpeak ( 002F0003 .Actor:Partner 1` 000D0004 000D0001 )
+			Call UseIdleAnimation ( .Actor:Partner .True )
+			
+			Wait 120`
+			
+			% Prepare ghost luigi descend (for real this time)
+			Call GetActorPos ( .Actor:Enemy1 *VarA *VarB *VarC )
+			Call SetGoalPos ( .Actor:Enemy1 *VarA *VarB *VarC )
+			Call AddActorPos ( .Actor:Enemy1 0` 200` 0` )
+			Call SetPartFlagBits   ( .Actor:Self 1` 20001 .True )
+			Call SetPartFlagBits   ( .Actor:Enemy1 1` 20001 .False )
+			Call UseIdleAnimation ( .Actor:Enemy1 .False )
+			
+			% Make Mario emote
+			Wait 20`
+			Call PlaySoundAtActor  ( .Actor:Player 00000263 )
+			Call GetActorPos       ( .Actor:Player *Var0 *Var1 *Var2 )
+			Add *Var1  00000014
+			Call PlayEffect        ( ~FX:EmoteIcon:Question 00000000 *Var0 *Var1 *Var2 20` 315` 30` 0` 0` 00000000 00000000 00000000 )
+			
+			Wait 30`
+			
+			Call ActorSpeak ( 002F0004 .Actor:Enemy1 1` .Animation:Idle .Animation:Idle ) % Luigi is offscreen so animations don't really matter
+			
+			% Make luigi descend (for real this time)
+			Wait 60`
+			Call FlyToGoal ( .Actor:Enemy1 200` 0` .Easing:Linear )
+			Call GetActorVar ( .Actor:Enemy1 1` *Var0 )
+			
+			Wait 15`
+			Call ActorSpeak ( 002F0005 .Actor:Enemy1 1` 00820014 .Animation:Idle )
+			
+			% Spawn in Bony Beetles
+			Call SummonEnemy ( $SpecialFormation_BonyBeetle1 0` )
+			Call SummonEnemy ( $SpecialFormation_BonyBeetle0 0` )
+			
+			Call GetActorPos ( .Actor:Enemy2 *VarA *VarB *VarC)
+			Sub *VarA 200`
+			Call SetGoalPos ( .Actor:Enemy2 *VarA *VarB *VarC )
+			Call SetHomePos ( .Actor:Enemy2 *VarA *VarB *VarC )
+			Call HPBarToHome ( .Actor:Enemy2 )
+			
+			Call GetActorPos ( .Actor:Enemy3 *VarA *VarB *VarC)
+			Sub *VarA 200`
+			Call SetGoalPos ( .Actor:Enemy3 *VarA *VarB *VarC )
+			Call SetHomePos ( .Actor:Enemy3 *VarA *VarB *VarC )
+			Call HPBarToHome ( .Actor:Enemy3 )
+			
+			Thread
+				Call SetActorSpeed ( .Actor:Enemy3 *Fixed[8.0] )
+				Call RunToGoal ( .Actor:Enemy3 0` .False )
+			EndThread
+			
+			Wait 1`
+			Call SetActorSpeed ( .Actor:Enemy2 *Fixed[8.0] )
+			Call RunToGoal ( .Actor:Enemy2 0` .False )
+			
+			Call UseIdleAnimation ( .Actor:Enemy1 .True )
+			Call RemoveActor ( .Actor:Self )
 			Return
 		Case  ==  .Event:EndFirstStrike % 35
 			Call  SetAnimationRate  ( .Actor:Self 00000001 *Fixed[2.0] )
@@ -494,6 +617,170 @@
 	Call  SetAnimation      ( .Actor:Self 00000001 00260001 )
 	Call  EnableIdleScript  ( .Actor:Self 00000001 )
 	Call  UseIdleAnimation  ( .Actor:Self .True )
+	Return
+	End
+}
+
+% Ghost Luigi
+#new:Actor $GhostLuigi
+{
+	% stats
+	[Index]         D5b
+	[Level]         40`b
+	% [MaxHP]         30`b
+	[MaxHP]         30`b
+	[Coins]         1`b
+	[Flags]       00000000
+	[StatusTable] $StatusTable_8021975C
+	% ai
+	[PartsCount]    1`s
+	[PartsTable]  $PartsTable_GhostLuigi
+	[Script]      $Script_Init_GhostLuigi
+	% move effectiveness
+	[Escape]       90`b
+	[Item]        100`b
+	[AirLift]     100`b
+	[Hurricane]    90`b % Bow's "Spook" as well
+	[UpAndAway]    95`b
+	[PowerBounce] 80`b
+	[SpinSmash]     0`b % weight (0-4)
+	% ui positions
+	[Size]         24`b  24`b % width height
+	[HealthBar]     0`b   0`b % dx dy
+	[StatusTurn]  -10`b  20`b % dx dy
+	[StatusIcon]   10`b  20`b % dx dy
+}
+
+#new:PartsTable $PartsTable_GhostLuigi {
+	00820001 01000000 002C00B0 $IdleAnimations_Luigi $DefenseTable_Luigi 00000000 00000000 00F60000 00000000
+	% 00120001 02000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
+	% 00120001 03000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
+}
+
+#new:Script $Script_Init_GhostLuigi {
+	Call BindTakeTurn ( .Actor:Self $Script_TakeTurn_GhostLuigi )
+	Call BindIdle ( .Actor:Self $Script_Idle_Luigi )
+	Call BindNextTurn ( .Actor:Self $Script_NextTurn_GhostLuigi )
+	Call BindHandleEvent ( .Actor:Self $Script_HandleEvent_Luigi )
+	
+	Call SetActorVar ( .Actor:Self 0` 0` ) % Var 0: next attack - 0`: jump, 1`: thunder
+	Call SetActorVar ( .Actor:Self 1` .False ) % Var 1: enabled - .True, .False
+	Return
+	End
+}
+
+#new:Script $Script_TakeTurn_GhostLuigi {
+	Call UseIdleAnimation ( .Actor:Self .False )
+	Call EnableIdleScript ( .Actor:Self .False )
+	
+	Call SetAnimation ( .Actor:Self 1` .Animation:AboutToJump )
+	Wait 10`
+	Call SetAnimation ( .Actor:Self 1` .Animation:Jumping )
+	
+	Thread
+		Wait 15`
+		Call SetAnimation ( .Actor:Self 1` .Animation:Sitting )
+	EndThread
+	
+	Call SetGoalToHome ( .Actor:Self )
+	Call SetActorJumpGravity ( .Actor:Self *Fixed[0.4] )
+	Call JumpToGoal ( .Actor:Self 40` .False .False .False )
+	
+	Thread
+		Loop 4
+			Call TranslateGroup ( ~Model:waa_bt01:dai 0` 4` 0` )
+			Call AddActorPos ( .Actor:Self 0` 4` 0` )
+			Wait 4`
+			Call TranslateGroup ( ~Model:waa_bt01:dai 0` 0` 0` )
+			Call AddActorPos ( .Actor:Self 0` -4` 0` )
+			Wait 4`
+		EndLoop
+	EndThread
+	
+	Call SetTargetActor ( .Actor:Self .Actor:Player )
+	Call SetGoalToTarget ( .Actor:Self )
+	
+	Call EnemyTestTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 00000000 00000003 00000010 )
+	Switch *Var0
+		CaseOR == .HitResult:Miss
+		CaseOR == .HitResult:Lucky
+			Call SetGoalToHome ( .Actor:Player )
+			Call SetActorJumpGravity ( .Actor:Player *Fixed[0.4] )
+			Call SetJumpAnimations ( .Actor:Player 00000000 00010007 00010008 00010009 )
+			Call JumpToGoal ( .Actor:Player 40` .True .True .False )
+			
+			Call UseIdleAnimation ( .Actor:Self .True )
+			Call EnableIdleScript ( .Actor:Self .True )
+			Return
+		EndCaseGroup
+	EndSwitch
+	
+	Thread
+		Wait 5`
+		Call UseIdleAnimation ( .Actor:Enemy3 .False )
+		Call EnableIdleScript ( .Actor:Enemy3 .False )
+		
+		Call SetAnimation ( .Actor:Enemy3 1` 00550010 )
+		Call SetGoalToHome ( .Actor:Enemy3 )
+		Call SetActorJumpGravity ( .Actor:Enemy3 *Fixed[0.4] )
+		Call JumpToGoal ( .Actor:Enemy3 40` .False .False .False )
+		
+		Call UseIdleAnimation ( .Actor:Enemy3 .True )
+		Call EnableIdleScript ( .Actor:Enemy3 .True )
+	EndThread
+	
+	Thread
+		Wait 7`
+		Call UseIdleAnimation ( .Actor:Enemy2 .False )
+		Call EnableIdleScript ( .Actor:Enemy2 .False )
+		
+		Call SetAnimation ( .Actor:Enemy2 1` 00550010 )
+		Call SetGoalToHome ( .Actor:Enemy2 )
+		Call SetActorJumpGravity ( .Actor:Enemy2 *Fixed[0.4] )
+		Call JumpToGoal ( .Actor:Enemy2 40` .False .False .False )
+		
+		Call UseIdleAnimation ( .Actor:Enemy2 .True )
+		Call EnableIdleScript ( .Actor:Enemy2 .True )
+	EndThread
+	
+	Thread
+		Call SetGoalToHome ( .Actor:Partner )
+		Call SetActorJumpGravity ( .Actor:Partner *Fixed[0.4] )
+		Call JumpToGoal ( .Actor:Partner 40` .False .False .False )
+	EndThread
+	
+	Wait 1`
+	Call SetGoalToHome ( .Actor:Player )
+	Call SetActorJumpGravity ( .Actor:Player *Fixed[0.4] )
+	Call JumpToGoal ( .Actor:Player 40` .False .False .False )
+	
+	Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000003 00000020 )
+	
+	Switch *Var0 
+		CaseOR == .HitResult:Hit
+		CaseOR == .HitResult:QuakeImmune
+			Call SetTargetActor ( .Actor:Self .Actor:Partner )
+			Call SetGoalToTarget ( .Actor:Self )
+			
+			Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000001 00000020 )
+		EndCaseGroup
+	EndSwitch
+	
+	Call UseIdleAnimation ( .Actor:Self .True )
+	Call EnableIdleScript ( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_Idle_GhostLuigi {
+	Loop
+		Wait 1`
+	EndLoop
+	Return
+	End
+}
+
+#new:Script $Script_NextTurn_GhostLuigi {
 	Return
 	End
 }
@@ -609,13 +896,14 @@
 	$SJIS_8022BC1C 00000002 $Formation_16 $Stage_8022BAEC 00000000
 	$SJIS_8022BC0C 00000004 $Formation_17 $Stage_8022BAEC 00000000
 	$SJIS_8022BC00 00000001 $Formation_18 $Stage_8022BAEC 00000000
-	$SJIS_Formation_19 00000001 $Formation_19 $Stage_Luimgi 00000000
+	$SJIS_Formation_19 00000002 $Formation_19 $Stage_Luimgi 00000000
 	00000000 00000000 00000000 00000000 00000000
 }
 
 #new:Formation $Formation_19 {
 	% actor type - id - ??
 	$Luigi 2` 10` 00000000 00000000 00000000 00000000
+	$GhostLuigi 2` 9` 00000000 00000000 00000000 00000000
 }
 
 #new:SJIS $SJIS_Formation_19 {
