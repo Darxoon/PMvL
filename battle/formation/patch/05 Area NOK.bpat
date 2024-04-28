@@ -23,7 +23,7 @@
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
 	% ai
-	[PartsCount]    4`s
+	[PartsCount]    3`s
 	[PartsTable]  $PartsTable_Luigi
 	[Script]      $Script_Init_Luigi
 	% move effectiveness
