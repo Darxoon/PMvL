@@ -1,5 +1,165 @@
 #import enemy/22_BonyBeetle.bpat
 
+#new:Function $Function_PlayExplosionFX
+{
+    0:  ADDIU     SP, SP, FFC8
+    4:  SW        S1, 14 (SP)
+    8:  COPY      S1, A0
+    C:  SW        RA, 20 (SP)
+   10:  SW        S3, 1C (SP)
+   14:  SW        S2, 18 (SP)
+   18:  SW        S0, 10 (SP)
+   1C:  SDC1      F22, 30 (SP)
+   20:  SDC1      F20, 28 (SP)
+   24:  LW        S0, C (S1)
+   28:  LW        A1, 0 (S0)
+   2C:  JAL       ~Func:get_variable
+   30:  ADDIU     S0, S0, 4
+   34:  LW        A1, 0 (S0)
+   38:  ADDIU     S0, S0, 4
+   3C:  COPY      A0, S1
+   40:  JAL       ~Func:get_variable
+   44:  COPY      S3, V0
+   48:  COPY      A0, S1
+   4C:  LW        A1, 0 (S0)
+   50:  JAL       ~Func:get_variable
+   54:  COPY      S0, V0
+   58:  MTC1      S3, F20
+   5C:  NOP
+   60:  CVT.S.W   F20, F20
+   64:  COPY      S2, V0
+   68:  MTC1      S2, F22
+   6C:  NOP
+   70:  CVT.S.W   F22, F22
+   74:  MTC1      S0, F0
+   78:  NOP
+   7C:  CVT.S.W   F0, F0
+   80:  MFC1      A1, F20
+   84:  MFC1      A3, F22
+   88:  MFC1      A2, F0
+   8C:  JAL       ~Func:playFX_17
+   90:  CLEAR     A0
+   94:  LAH       V1, 800DC1EC
+   9C:  LI        V0, 93
+   A0:  BEQ       V1, V0, .o120
+   A4:  SLTI      V0, V1, 94
+   A8:  BEQ       V0, R0, .oC0
+   AC:  LI        V0, 92
+   B0:  BEQ       V1, V0, .oD4
+   B4:  NOP
+   B8:  BEQ       R0, R0, .o1D0
+   BC:  NOP
+        .oC0
+   C0:  LI        V0, 94
+   C4:  BEQ       V1, V0, .o178
+   C8:  NOP
+   CC:  BEQ       R0, R0, .o1D0
+   D0:  NOP
+        .oD4
+   D4:  LW        V0, AC (S1)
+   D8:  BLEZ      V0, .o100
+   DC:  ADDIU     V0, S0, 14
+   E0:  MTC1      V0, F0
+   E4:  NOP
+   E8:  CVT.S.W   F0, F0
+   EC:  MFC1      A1, F20
+   F0:  MFC1      A3, F22
+   F4:  MFC1      A2, F0
+   F8:  BEQ       R0, R0, .o208
+   FC:  LI        A0, 1
+        .o100
+  100:  MTC1      V0, F0
+  104:  NOP
+  108:  CVT.S.W   F0, F0
+  10C:  MFC1      A1, F20
+  110:  MFC1      A3, F22
+  114:  MFC1      A2, F0
+  118:  BEQ       R0, R0, .o208
+  11C:  CLEAR     A0
+        .o120
+  120:  LW        V0, AC (S1)
+  124:  BLEZ      V0, .o14C
+  128:  ADDIU     V0, S0, 14
+  12C:  MTC1      V0, F0
+  130:  NOP
+  134:  CVT.S.W   F0, F0
+  138:  MFC1      A1, F20
+  13C:  MFC1      A3, F22
+  140:  MFC1      A2, F0
+  144:  BEQ       R0, R0, .o168
+  148:  LI        A0, 1
+        .o14C
+  14C:  MTC1      V0, F0
+  150:  NOP
+  154:  CVT.S.W   F0, F0
+  158:  MFC1      A1, F20
+  15C:  MFC1      A3, F22
+  160:  MFC1      A2, F0
+  164:  CLEAR     A0
+        .o168
+  168:  JAL       ~Func:playFX_19
+  16C:  NOP
+  170:  BEQ       R0, R0, .o214
+  174:  LI        A0, 2017
+        .o178
+  178:  LW        V0, AC (S1)
+  17C:  BLEZ      V0, .o1A4
+  180:  ADDIU     V0, S0, 14
+  184:  MTC1      V0, F0
+  188:  NOP
+  18C:  CVT.S.W   F0, F0
+  190:  MFC1      A1, F20
+  194:  MFC1      A3, F22
+  198:  MFC1      A2, F0
+  19C:  BEQ       R0, R0, .o1C0
+  1A0:  LI        A0, 2
+        .o1A4
+  1A4:  MTC1      V0, F0
+  1A8:  NOP
+  1AC:  CVT.S.W   F0, F0
+  1B0:  MFC1      A1, F20
+  1B4:  MFC1      A3, F22
+  1B8:  MFC1      A2, F0
+  1BC:  LI        A0, 1
+        .o1C0
+  1C0:  JAL       ~Func:playFX_19
+  1C4:  NOP
+  1C8:  BEQ       R0, R0, .o214
+  1CC:  LI        A0, 2017
+        .o1D0
+  1D0:  MTC1      S3, F0
+  1D4:  NOP
+  1D8:  CVT.S.W   F0, F0
+  1DC:  ADDIU     V0, S0, 14
+  1E0:  MFC1      A1, F0
+  1E4:  MTC1      V0, F0
+  1E8:  NOP
+  1EC:  CVT.S.W   F0, F0
+  1F0:  MFC1      A2, F0
+  1F4:  MTC1      S2, F0
+  1F8:  NOP
+  1FC:  CVT.S.W   F0, F0
+  200:  MFC1      A3, F0
+  204:  CLEAR     A0
+        .o208
+  208:  JAL       ~Func:playFX_19
+  20C:  NOP
+  210:  LI        A0, 2016
+        .o214
+  214:  JAL       ~Func:sfx_play_sound
+  218:  NOP
+  21C:  LW        RA, 20 (SP)
+  220:  LW        S3, 1C (SP)
+  224:  LW        S2, 18 (SP)
+  228:  LW        S1, 14 (SP)
+  22C:  LW        S0, 10 (SP)
+  230:  LDC1      F22, 30 (SP)
+  234:  LDC1      F20, 28 (SP)
+  238:  LI        V0, 2
+  23C:  JR        RA
+  240:  ADDIU     SP, SP, 38
+}
+
 % Luigi (Actor)
 
 #define .Animation:Sitting 00820007
@@ -60,6 +220,7 @@
 
 #new:DefenseTable $DefenseTable_Luigi {
 	.Element:Normal 00000000
+	.Element:Throw  FFFFFFFD
 	.Element:End
 }
 
@@ -531,12 +692,12 @@
 			Wait 120`
 			
 			% Prepare ghost luigi descend (for real this time)
+			Call AddActorPos ( .Actor:Enemy1 -200` 0` 0` )
 			Call GetActorPos ( .Actor:Enemy1 *VarA *VarB *VarC )
 			Call SetGoalPos ( .Actor:Enemy1 *VarA *VarB *VarC )
 			Call AddActorPos ( .Actor:Enemy1 0` 200` 0` )
 			Call SetPartFlagBits   ( .Actor:Self 1` 20001 .True )
 			Call SetPartFlagBits   ( .Actor:Enemy1 1` 20001 .False )
-			Call UseIdleAnimation ( .Actor:Enemy1 .False )
 			
 			% Make Mario emote
 			Wait 20`
@@ -582,7 +743,9 @@
 			Call SetActorSpeed ( .Actor:Enemy2 *Fixed[8.0] )
 			Call RunToGoal ( .Actor:Enemy2 0` .False )
 			
+			Call CancelEnemyTurn ( 00000001 )
 			Call UseIdleAnimation ( .Actor:Enemy1 .True )
+			Call EnableIdleScript ( .Actor:Enemy1 .True )
 			Call RemoveActor ( .Actor:Self )
 			Return
 		Case  ==  .Event:EndFirstStrike % 35
@@ -628,12 +791,12 @@
 	[Index]         D5b
 	[Level]         40`b
 	% [MaxHP]         30`b
-	[MaxHP]         30`b
+	[MaxHP]         35`b
 	[Coins]         1`b
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
 	% ai
-	[PartsCount]    1`s
+	[PartsCount]    2`s
 	[PartsTable]  $PartsTable_GhostLuigi
 	[Script]      $Script_Init_GhostLuigi
 	% move effectiveness
@@ -653,18 +816,38 @@
 
 #new:PartsTable $PartsTable_GhostLuigi {
 	00820001 01000000 002C00B0 $IdleAnimations_Luigi $DefenseTable_Luigi 00000000 00000000 00F60000 00000000
-	% 00120001 02000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
-	% 00120001 03000000 001800FF $IdleAnimations_Projectile $DefenseTable_Projectile 00000000 00000000 FFF60000 00000000
+}
+
+#new:DefenseTable $DefenseTable_GhostLuigi_Invulnerable {
+	.Element:Normal 000000FF
+	.Element:Blast 000000FF
+	.Element:Cosmic 000000FF
+	.Element:Fire 000000FF
+	.Element:Hammer 000000FF
+	.Element:Ice 000000FF
+	.Element:Jump 000000FF
+	.Element:Magic 000000FF
+	.Element:Mystery 000000FF
+	.Element:Quake 000000FF
+	.Element:Shock 000000FF
+	.Element:Throw 000000FF
+	.Element:Water 000000FF
+	.Element:End
 }
 
 #new:Script $Script_Init_GhostLuigi {
 	Call BindTakeTurn ( .Actor:Self $Script_TakeTurn_GhostLuigi )
 	Call BindIdle ( .Actor:Self $Script_Idle_Luigi )
 	Call BindNextTurn ( .Actor:Self $Script_NextTurn_GhostLuigi )
-	Call BindHandleEvent ( .Actor:Self $Script_HandleEvent_Luigi )
+	Call BindHandleEvent ( .Actor:Self $Script_HandleEvent_GhostLuigi )
 	
 	Call SetActorVar ( .Actor:Self 0` 0` ) % Var 0: next attack - 0`: jump, 1`: thunder
 	Call SetActorVar ( .Actor:Self 1` .False ) % Var 1: enabled - .True, .False
+	
+	Call AddActorPos ( .Actor:Self 200` 0` 0` )
+	Call UseIdleAnimation ( .Actor:Self .False ) % enabled in Luigi's death script
+	Call EnableIdleScript ( .Actor:Self .False )
+	
 	Return
 	End
 }
@@ -687,7 +870,7 @@
 	Call JumpToGoal ( .Actor:Self 40` .False .False .False )
 	
 	Thread
-		Loop 4
+		Loop 3
 			Call TranslateGroup ( ~Model:waa_bt01:dai 0` 4` 0` )
 			Call AddActorPos ( .Actor:Self 0` 4` 0` )
 			Wait 4`
@@ -715,56 +898,113 @@
 		EndCaseGroup
 	EndSwitch
 	
-	Thread
-		Wait 5`
-		Call UseIdleAnimation ( .Actor:Enemy3 .False )
-		Call EnableIdleScript ( .Actor:Enemy3 .False )
-		
-		Call SetAnimation ( .Actor:Enemy3 1` 00550010 )
-		Call SetGoalToHome ( .Actor:Enemy3 )
-		Call SetActorJumpGravity ( .Actor:Enemy3 *Fixed[0.4] )
-		Call JumpToGoal ( .Actor:Enemy3 40` .False .False .False )
-		
-		Call UseIdleAnimation ( .Actor:Enemy3 .True )
-		Call EnableIdleScript ( .Actor:Enemy3 .True )
-	EndThread
+	Call ActorExists ( .Actor:Enemy3 *Var0 )
+	If *Var0 == .True
+		Thread
+			Wait 5`
+			Call UseIdleAnimation ( .Actor:Enemy3 .False )
+			Call EnableIdleScript ( .Actor:Enemy3 .False )
+			
+			Call SetAnimation ( .Actor:Enemy3 1` 00550010 )
+			Call SetGoalToHome ( .Actor:Enemy3 )
+			Call SetActorJumpGravity ( .Actor:Enemy3 *Fixed[0.4] )
+			Call JumpToGoal ( .Actor:Enemy3 40` .False .False .False )
+			
+			Call UseIdleAnimation ( .Actor:Enemy3 .True )
+			Call EnableIdleScript ( .Actor:Enemy3 .True )
+		EndThread
+	EndIf
 	
-	Thread
-		Wait 7`
-		Call UseIdleAnimation ( .Actor:Enemy2 .False )
-		Call EnableIdleScript ( .Actor:Enemy2 .False )
-		
-		Call SetAnimation ( .Actor:Enemy2 1` 00550010 )
-		Call SetGoalToHome ( .Actor:Enemy2 )
-		Call SetActorJumpGravity ( .Actor:Enemy2 *Fixed[0.4] )
-		Call JumpToGoal ( .Actor:Enemy2 40` .False .False .False )
-		
-		Call UseIdleAnimation ( .Actor:Enemy2 .True )
-		Call EnableIdleScript ( .Actor:Enemy2 .True )
-	EndThread
+	Call ActorExists ( .Actor:Enemy2 *Var0 )
+	If *Var0 == .True
+		Thread
+			Wait 7`
+			Call UseIdleAnimation ( .Actor:Enemy2 .False )
+			Call EnableIdleScript ( .Actor:Enemy2 .False )
+			
+			Call SetAnimation ( .Actor:Enemy2 1` 00550010 )
+			Call SetGoalToHome ( .Actor:Enemy2 )
+			Call SetActorJumpGravity ( .Actor:Enemy2 *Fixed[0.4] )
+			Call JumpToGoal ( .Actor:Enemy2 40` .False .False .False )
+			
+			Call UseIdleAnimation ( .Actor:Enemy2 .True )
+			Call EnableIdleScript ( .Actor:Enemy2 .True )
+		EndThread
+	EndIf
 	
-	Thread
-		Call SetGoalToHome ( .Actor:Partner )
-		Call SetActorJumpGravity ( .Actor:Partner *Fixed[0.4] )
-		Call JumpToGoal ( .Actor:Partner 40` .False .False .False )
-	EndThread
+	Call GetCurrentPartnerID ( *Var1 )
 	
-	Wait 1`
+	If *Var1 != 9` % Bow
+		Thread
+			Call SetGoalToHome ( .Actor:Partner )
+			Call SetActorJumpGravity ( .Actor:Partner *Fixed[0.4] )
+			Call JumpToGoal ( .Actor:Partner 40` .False .False .False )
+		EndThread
+	EndIf
+	
 	Call SetGoalToHome ( .Actor:Player )
 	Call SetActorJumpGravity ( .Actor:Player *Fixed[0.4] )
 	Call JumpToGoal ( .Actor:Player 40` .False .False .False )
 	
 	Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000003 00000020 )
 	
-	Switch *Var0 
-		CaseOR == .HitResult:Hit
-		CaseOR == .HitResult:QuakeImmune
-			Call SetTargetActor ( .Actor:Self .Actor:Partner )
-			Call SetGoalToTarget ( .Actor:Self )
-			
-			Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 00000001 00000020 )
-		EndCaseGroup
-	EndSwitch
+	If *Var1 != 9`
+		Switch *Var0 
+			CaseOR == .HitResult:Hit
+			CaseOR == .HitResult:QuakeImmune
+				Call SetTargetActor ( .Actor:Self .Actor:Partner )
+				Call SetGoalToTarget ( .Actor:Self )
+				
+				Call GetBattleFlags ( *Var0 )
+				AND *Var0 80000000 % BS_FLAGS1_ATK_BLOCKED, is set in EnemyDamageTarget above on a successful block
+				
+				If *Var0 != 0`
+					Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 0` 00000020 )
+				Else
+					Switch *Var1
+						Case == 3` % Bombette
+							Call GetActorPos ( .Actor:Partner *VarA *VarB *VarC )
+							Call $Function_PlayExplosionFX ( *VarA *VarB *VarC )
+							
+							Call PlaySoundAtActor ( .Actor:Partner .Sound:Cannon1 )
+							Call SetActorRotationOffset ( .Actor:Partner 0` 16` 0` )
+							
+							% Bombette descends again after exploding
+							Thread
+								Set   *Var0  00000000
+								Loop  00000050
+									Wait  1`
+									Call  SetActorRotation  ( .Actor:Partner 00000000 00000000 *Var0 )
+									Add   *Var0  00000021
+								EndLoop
+								Call  SetActorRotation  ( .Actor:Partner 00000000 00000000 00000000 )
+							EndThread
+							Call  SetAnimation  ( .Actor:Partner FFFFFFFF 000B001B )
+							Call  GetActorPos   ( .Actor:Partner *Var0 *Var1 *Var2 )
+							% Sub   *Var0  00000032
+							Add   *Var1  000000C8
+							Call  SetGoalPos    ( .Actor:Partner *Var0 *Var1 *Var2 )
+							Call  FlyToGoal     ( .Actor:Partner  10`  0` .Easing:Linear )
+							Wait  50`
+							Call  80280818 ( )
+							Call  SetGoalToHome ( .Actor:Partner )
+							Call  GetGoalPos    ( .Actor:Partner *Var0 *Var1 *Var2 )
+							% Add   *Var0  00000019
+							Add   *Var1  000000C8
+							Call  SetActorPos   ( .Actor:Partner *Var0 *Var1 *Var2 )
+							Call  SetGoalToHome ( .Actor:Partner )
+							Call  SetActorSpeed ( .Actor:Partner *Fixed[4.0] )
+							Call  SetActorJumpGravity   ( .Actor:Partner *Fixed[0.6] )
+							Call  SetAnimation  ( .Actor:Partner FFFFFFFF 000B001B )
+							Call  JumpToGoal    ( .Actor:Partner  20` .False .True .False )
+							Call  SetAnimation  ( .Actor:Partner FFFFFFFF 000B0004 )
+						Case == 1` % Goombario
+							Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:0 0000FFFF 00000000 1` 00000020 )
+					EndSwitch
+				EndIf
+			EndCaseGroup
+		EndSwitch
+	EndIf
 	
 	Call UseIdleAnimation ( .Actor:Self .True )
 	Call EnableIdleScript ( .Actor:Self .True )
@@ -772,15 +1012,138 @@
 	End
 }
 
-#new:Script $Script_Idle_GhostLuigi {
-	Loop
-		Wait 1`
-	EndLoop
+#new:Script $Script_NextTurn_GhostLuigi {
 	Return
 	End
 }
 
-#new:Script $Script_NextTurn_GhostLuigi {
+#new:Script $Script_HandleEvent_GhostLuigi {
+	Call  UseIdleAnimation  ( .Actor:Self .False )
+	Call  EnableIdleScript  ( .Actor:Self 00000000 )
+	Call  SetActorScale     ( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
+	Call  GetLastEvent      ( .Actor:Self *Var0 )
+	Switch  *Var0
+		CaseOR  ==  .Event:HitCombo % 9
+		CaseOR  ==  .Event:Hit % A
+			SetConst  *Var0  00000001
+			SetConst  *Var1  .Animation:Hit
+			ExecWait  DoNormalHit
+		EndCaseGroup
+		Case  ==  .Event:BurnHit % E
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260009
+			SetConst  *Var2  0026000A
+			ExecWait  DoBurnHit
+		Case  ==  .Event:BurnDeath % 24
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260009
+			SetConst  *Var2  0026000A
+			ExecWait  DoBurnHit
+			SetConst  *Var0  00000001
+			SetConst  *Var1  0026000A
+			ExecWait  DoDeath
+			Return
+		Case  ==  .Event:SpinSmashHit % B
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260005
+			ExecWait  DoSpinSmashHit
+		Case  ==  .Event:SpinSmashDeath % 21
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260005
+			ExecWait  DoSpinSmashHit
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260006
+			ExecWait  DoDeath
+			Return
+		Case  ==  .Event:ShockHit % 2F
+			SetConst  *Var0  00000001
+			SetConst  *Var1  0026000E
+			ExecWait  DoShockHit
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260005
+			ExecWait  DoJumpBack
+			Call  JumpToGoal    ( .Actor:Self  5` .False .True .False )
+			Call  SetAnimationRate      ( .Actor:Self 00000001 *Fixed[2.0] )
+			Call  SetAnimation  ( .Actor:Self 00000001 00260007 )
+			Call  SetGoalToHome ( .Actor:Self )
+			Call  SetActorSpeed ( .Actor:Self *Fixed[8.0] )
+			Call  RunToGoal     ( .Actor:Self  0` .False )
+			Call  SetAnimationRate      ( .Actor:Self 00000001 *Fixed[1.0] )
+			Wait  5`
+			Call  SetAnimation  ( .Actor:Self 00000001 00260001 )
+			Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.6] )
+			Call  JumpToGoal    ( .Actor:Self  5` .False .True .False )
+		Case  ==  .Event:ShockDeath % 26
+			BreakCase
+			
+			SetConst  *Var0  00000001
+			SetConst  *Var1  0026000E
+			ExecWait  DoShockHit
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260006
+			ExecWait  DoDeath
+			Return
+		Case  ==  .Event:StarBeam % 13
+		CaseOR  ==  00000017 % 17
+		CaseOR  ==  .Event:Immune % 19
+		CaseOR  ==  .Event:AirLiftFailed % 1F
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00820000
+			ExecWait  DoImmune
+		EndCaseGroup
+		Case  ==  .Event:Death % 20
+			Call SetEnemyHP ( .Actor:Self 2` )
+			BreakCase
+			
+			SetConst  *Var0  00000001
+			SetConst  *Var1  .Animation:Hit
+			ExecWait  DoNormalHit
+			Wait  10`
+			Call ActorSpeak ( 002F0002 .Actor:Self 1` 00820014 00820004 )
+			Wait 10`
+			SetConst  *Var0  00000001
+			SetConst  *Var1  .Animation:Falling
+			ExecWait  DoDeath
+			Return
+		Case  ==  .Event:EndFirstStrike % 35
+			Call  SetAnimationRate  ( .Actor:Self 00000001 *Fixed[2.0] )
+			Call  SetAnimation  ( .Actor:Self 00000001 00260003 )
+			Call  SetGoalToHome ( .Actor:Self )
+			Call  SetActorSpeed ( .Actor:Self *Fixed[4.0] )
+			Call  RunToGoal     ( .Actor:Self  0` .False )
+			Call  SetAnimationRate  ( .Actor:Self 00000001 *Fixed[1.0] )
+			Call  HPBarToHome   ( .Actor:Self )
+		Case  ==  .Event:RecoverStatus % 31
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260001
+			ExecWait  DoRecover
+		Case  ==  .Event:ScareAway % 39
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260003
+			SetConst  *Var2  00260005
+			ExecWait  DoScareAway
+			Return
+		Case  ==  .Event:BeginAirLift % 3A
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260003
+			ExecWait  DoAirLift
+		Case  ==  .Event:BlowAway % 16
+			SetConst  *Var0  00000001
+			SetConst  *Var1  00260005
+			ExecWait  DoBlowAway
+			Return
+		Default
+	EndSwitch
+	
+	Call GetActorHP ( .Actor:Self *Var0 )
+	If *Var0 <= 5`
+		Call SetEnemyHP ( .Actor:Self 5` )
+		Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_GhostLuigi_Invulnerable )
+	EndIf
+	
+	Call  SetAnimation      ( .Actor:Self 00000001 00260001 )
+	Call  EnableIdleScript  ( .Actor:Self 00000001 )
+	Call  UseIdleAnimation  ( .Actor:Self .True )
 	Return
 	End
 }

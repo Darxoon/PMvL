@@ -22,6 +22,9 @@
     SB t5, 000A (t0) % Lucky Star
     SB t5, 001C (t0) % Goombario Get
     SB t5, 001D (t0) % Goombario level
+    SB t5, 002C (t0) % Bombette Get
+    SB t5, 002D (t0) % Bombette level
+    SB t5, 005C (t0) % Bow Get
     SB t5, 0012 (t0) % Goombario out
     SB t7, 0290 (t0) 
     SB t7, 028E (t0) %star power

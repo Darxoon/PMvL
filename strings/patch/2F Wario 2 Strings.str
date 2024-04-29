@@ -37,9 +37,9 @@
 #message:2F:004
 {
 	[Style Right]
-	It's not over! Prepare for [Pause:8][PrintRising]THIS[/fx]:[br]
-	Luigi descending back from[br]
-	Heaven!![br]
+	It's not over! Prepare for[br]
+	[Pause:8][PrintRising]THIS[/fx]: Luigi descending back[br]
+	from Heaven!![br]
 	[Wait][End]
 }
 
