@@ -50,3 +50,11 @@
 	until now![br]
 	[Wait][End]
 }
+
+#message:2F:006
+{
+	[Style Right]
+	It's Luigover for you! I have[br]
+	another trick up my sleeve![br]
+	[Wait][End]
+}
