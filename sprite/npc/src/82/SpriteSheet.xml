@@ -4,7 +4,7 @@
 		<Palette id="0" src="Palette_00.png"/>
 		<Palette id="1" name="Mushroom" src="Mushroom.pal.png"/>
 		<Palette id="2" name="Mushroom - Copy" src="Mushroom - Copy.pal.png"/>
-		<Palette id="3" name="Palette_08" src="Palette_08.pal.png"/>
+		<Palette id="3" name="0B640 - Copy" src="0B640 - Copy.pal.png"/>
 	</PaletteList>
 	<RasterList>
 		<Raster id="0" palette="0" src="Raster_00.png"/>
@@ -55,9 +55,8 @@
 		<Raster id="2D" name="Mushroom" palette="1" src="Mushroom.png"/>
 		<Raster id="2E" name="0B640" palette="0" src="0B640.png"/>
 		<Raster id="2F" name="PaperLuigiHelp - Copy" palette="0" src="PaperLuigiHelp - Copy.png"/>
-		<Raster id="30" name="Palette_08" palette="3" src="Palette_08.png"/>
+		<Raster id="30" name="0B640 - Copy" palette="3" src="0B640 - Copy.png"/>
 		<Raster id="31" name="Raster_00 (copy)" palette="3" src="Raster_00 (copy).png"/>
-		<Raster id="32" name="0B640 - Copy" palette="3" src="0B640 - Copy.png"/>
 	</RasterList>
 	<AnimationList>
 		<Animation name="Anim_00">
@@ -497,7 +496,7 @@
 		</Animation>
 		<Animation name="Anim_23">
 			<Component xyz="0,0,0">
-				<Command val="1032"/>
+				<Command val="1030"/>
 				<Command val="3000"/>
 				<Command val="9"/>
 				<Command val="0"/>
