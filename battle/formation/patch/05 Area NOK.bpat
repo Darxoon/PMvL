@@ -895,7 +895,7 @@
 		Else
 			Set *Var6 .True
 			Set *Var7 4`
-			Set *Var8 45`
+			Set *Var8 50`
 			Set *Var9 2`
 		EndIf
 		
@@ -1211,6 +1211,8 @@
 			SetConst  *Var2  00820022
 			ExecWait  DoBurnHit
 		Case  ==  .Event:BurnDeath % 24
+			BreakCase
+			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00820022
 			SetConst  *Var2  00820022
@@ -1224,6 +1226,8 @@
 			SetConst  *Var1  00260005
 			ExecWait  DoSpinSmashHit
 		Case  ==  .Event:SpinSmashDeath % 21
+			BreakCase
+			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00260005
 			ExecWait  DoSpinSmashHit
@@ -1452,16 +1456,11 @@
 			Wait 1`
 		EndLoop
 		
-		% Wait 200`
-		
-		% Set *MB_debug 12`
 		Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_Luigi )
 		Call $Function_SetActorHeight ( .Actor:Self 132` )
 		Call SetActorVar ( .Actor:Self 0` 2` )
+		Call CancelEnemyTurn ( 0000001 )
 		
-		% Wait 200`
-		
-		% Set *MB_debug 14`
 		Call ActorExists ( .Actor:Enemy2 *Var0 )
 		If *Var0 == .True
 			Call RemoveActor ( .Actor:Enemy2 )

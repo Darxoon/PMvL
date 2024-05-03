@@ -3,6 +3,7 @@
 % Credit to Nine
 #new:Function $GivePlayerStartingStats {
     LIO t0, 8010F290
+    ORI t1, r0, 14 % hex for 15
     ORI t2, r0, F % hex for 15
     ORI t3, r0, 15 % hex for 21
     ORI t4, r0, A % hex for 10
@@ -11,9 +12,9 @@
     ORI t7, r0, 7 % hex for 7
     SB t5, 0000 (t0) % set Boots
     SB t5, 0001 (t0) % set Hammer
-    SB t2, 0002 (t0) % set hp
-    SB t2, 0003 (t0) % max hp
-    SB t2, 0004 (t0) % true max hp
+    SB t1, 0002 (t0) % set hp
+    SB t1, 0003 (t0) % max hp
+    SB t1, 0004 (t0) % true max hp
     SB t2, 0005 (t0) % set fp
     SB t2, 0006 (t0) % max fp
     SB t2, 0007 (t0) % true max fp
@@ -25,6 +26,7 @@
     SB t5, 002C (t0) % Bombette Get
     SB t5, 002D (t0) % Bombette level
     SB t5, 005C (t0) % Bow Get
+    SB t5, 005D (t0) % Bow level
     SB t5, 0012 (t0) % Goombario out
     SB t7, 0290 (t0) 
     SB t7, 028E (t0) %star power
@@ -66,7 +68,6 @@
 		Call AddBadge ( .Item:DeepFocus1 0` )
 		Call AddBadge ( .Item:GroupFocus 0` )
 		Call AddBadge ( .Item:HPPlusA 0` )
-		Call AddBadge ( .Item:HPPlusB 0` )
 		Call AddBadge ( .Item:FPPlusA 0` )
 		Call AddBadge ( .Item:FPPlusB 0` )
 		Call AddBadge ( .Item:PowerPlusA 0` )

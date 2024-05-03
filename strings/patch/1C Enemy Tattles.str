@@ -39,3 +39,25 @@
 	'em over. After that, beating[BR]
 	'em will be a breeze.[Wait][End]
 }
+
+#string:1C:03A
+{
+	[Style Right]
+	This is a Lava Bubble, a fire[BR]
+	ball monster.[BR]
+	[Pause 10]Lava Bubbles live near lava.[BR]
+	[Wait][Next]
+	Max HP: 9, Attack Power: 3,[BR]
+	Defense Power: 0[BR]
+	[Wait][Next]
+	They are obviously pretty hot,[BR]
+	so you'll get hurt if you try[BR]
+	to jump on 'em.[BR]
+	[Wait][Next]
+	They sometimes attack your[BR]
+	friends (like me!), too.[BR]
+	[Pause 10]The power of that attack is 1.[BR]
+	[Wait][Next]
+	Because of their fiery nature,[BR]
+	they fear snow and water.[Wait][End]
+}

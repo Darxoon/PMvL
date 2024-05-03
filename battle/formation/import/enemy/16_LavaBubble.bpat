@@ -421,7 +421,7 @@
   4C0:  Call  SetGoalPos        ( .Actor:Self *Var0 *Var1 *Var2 )
   4DC:  Call  JumpToGoal        ( .Actor:Self  10` .False .True .False )
   4FC:  Wait  2`
-  508:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:Fire 00000000 00000000 00000004 00000020 )
+  508:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:Fire 00000000 00000000 3` 00000020 )
   530:  Switch  *Var0 
   53C:  	CaseOR  ==  .HitResult:Hit % 0
   548:  	CaseOR  ==  .HitResult:QuakeImmune % 2
@@ -543,7 +543,7 @@
   490:  Add   *Var5  00000002 
   4A0:  ExecWait  $Script_8021A218_16 
   4AC:  Wait  2`
-  4B8:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Fire 00000000 00000000 00000002 00000020 )
+  4B8:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact|Fire 00000000 00000000 1` 00000020 )
   4E0:  Wait  20`
   4EC:  Switch  *Var0 
   4F8:  	CaseOR  ==  .HitResult:Hit % 0
@@ -633,7 +633,7 @@
   58C:  Call  SetActorSpeed ( .Actor:Self *Fixed[8.0] )
   5A0:  Call  FlyToGoal     ( .Actor:Self  0`  -10` .Easing:QuadraticOut )
   5BC:  Wait  2`
-  5C8:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:Fire 00000000 00000000 00000004 00000020 )
+  5C8:  Call  EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:Fire 00000000 00000000 3` 00000020 )
   5F0:  Switch  *Var0 
   5FC:  	CaseOR  ==  .HitResult:Hit % 0
   608:  	CaseOR  ==  .HitResult:QuakeImmune % 2
