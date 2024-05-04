@@ -5,6 +5,7 @@
 		<Palette id="1" name="Mushroom" src="Mushroom.pal.png"/>
 		<Palette id="2" name="Mushroom - Copy" src="Mushroom - Copy.pal.png"/>
 		<Palette id="3" name="0B640 - Copy" src="0B640 - Copy.pal.png"/>
+		<Palette id="4" name="Palette_02" src="Palette_02.pal.png"/>
 	</PaletteList>
 	<RasterList>
 		<Raster id="0" palette="0" src="Raster_00.png"/>
@@ -57,6 +58,8 @@
 		<Raster id="2F" name="PaperLuigiHelp - Copy" palette="0" src="PaperLuigiHelp - Copy.png"/>
 		<Raster id="30" name="0B640 - Copy" palette="3" src="0B640 - Copy.png"/>
 		<Raster id="31" name="Raster_00 (copy)" palette="3" src="Raster_00 (copy).png"/>
+		<Raster id="32" name="2AE10" palette="0" src="2AE10.png"/>
+		<Raster id="33" name="Palette_02" palette="4" src="Palette_02.png"/>
 	</RasterList>
 	<AnimationList>
 		<Animation name="Anim_00">
@@ -500,6 +503,37 @@
 				<Command val="3000"/>
 				<Command val="9"/>
 				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="2"/>
+				<Command val="2000"/>
+			</Component>
+		</Animation>
+		<Animation name="Anim_24">
+			<Component xyz="0,0,0">
+				<Command val="1032"/>
+				<Command val="3000"/>
+				<Command val="FFFD"/>
+				<Command val="0"/>
+				<Command val="0"/>
+				<Command val="2"/>
+				<Command val="2000"/>
+			</Component>
+			<Component name="Comp 01" xyz="0,0,-1">
+				<Command val="1033"/>
+				<Command val="3000"/>
+				<Command val="1D"/>
+				<Command val="26"/>
+				<Command val="0"/>
+				<Command val="2"/>
+				<Command val="2000"/>
+			</Component>
+		</Animation>
+		<Animation name="Anim_25">
+			<Component xyz="0,0,0">
+				<Command val="1033"/>
+				<Command val="3000"/>
+				<Command val="1"/>
+				<Command val="FFF6"/>
 				<Command val="0"/>
 				<Command val="2"/>
 				<Command val="2000"/>
