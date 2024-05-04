@@ -195,9 +195,9 @@
 	[Escape]       90`b
 	[Item]        100`b
 	[AirLift]     100`b
-	[Hurricane]    90`b % Bow's "Spook" as well
+	[Hurricane]    0`b % Bow's "Spook" as well
 	[UpAndAway]    95`b
-	[PowerBounce] 80`b
+	[PowerBounce] 76`b
 	[SpinSmash]     0`b % weight (0-4)
 	% ui positions
 	[Size]         24`b  24`b % width height

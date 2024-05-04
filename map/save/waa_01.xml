@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map name="waa_01" author="unnamed" background="sam_bg" textures="arn_tex">
 	<Editor>
-		<Camera pos="-288.795502,186.389740,693.463806" pitch="-5.600028" yaw="16.160278"/>
+		<Camera pos="-178.119415,159.156754,176.289398" pitch="36.000019" yaw="0.480549"/>
 		<Camera pos="0.000000,65536.000000,0.000000"/>
 		<Camera pos="65536.000000,-50.000000,-7.496218"/>
 		<Camera pos="0.000000,-150.634903,65536.000000"/>
@@ -51,15 +51,13 @@
 		</Node>
 	</ZoneTree>
 	<MarkerTree>
-		<Node name="Root" id="6">
-			<Node name="Entrances" id="3">
-				<Node name="entry_n" id="FFFFFFFF"/>
-				<Node name="entry_e" id="0"/>
-				<Node name="entry_s" id="1"/>
-				<Node name="entry_w" id="2"/>
+		<Node name="Root" id="4">
+			<Node name="Entrances" id="0">
+				<Node name="Entry0" id="FFFFFFFF"/>
 			</Node>
-			<Node name="save_block" id="4"/>
-			<Node name="Luigi" id="5"/>
+			<Node name="save_block" id="1"/>
+			<Node name="Luigi" id="2"/>
+			<Node name="heal_block" id="3"/>
 		</Node>
 	</MarkerTree>
 	<LightSets>
@@ -699,31 +697,26 @@
 	</Zones>
 	<Markers>
 		<Marker ver="4" type="Root">
-			<MapObject name="Root" id="6"/>
+			<MapObject name="Root" id="4"/>
+		</Marker>
+		<Marker ver="4" type="Entity" pos="-148,60,0" yaw="0.000000">
+			<MapObject name="heal_block" id="3"/>
+			<Entity type="802EA7E0"/>
 		</Marker>
 		<Marker ver="4" type="NPC" pos="110,0,0" yaw="0.000000">
-			<MapObject name="Luigi" id="5"/>
+			<MapObject name="Luigi" id="2"/>
 			<Movement type="Stationary" data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 			<Sprite sprite="82" palette="0" animations="4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"/>
 		</Marker>
-		<Marker ver="4" type="Entity" pos="0,60,0" yaw="0.000000">
-			<MapObject name="save_block" id="4"/>
+		<Marker ver="4" type="Entity" pos="-200,60,0" yaw="0.000000">
+			<MapObject name="save_block" id="1"/>
 			<Entity type="802E9A18"/>
 		</Marker>
 		<Marker ver="4" type="Group">
-			<MapObject name="Entrances" id="3"/>
+			<MapObject name="Entrances" id="0"/>
 		</Marker>
 		<Marker ver="4" type="Entry" pos="-475,0,0" yaw="90.000000">
-			<MapObject name="entry_w" id="2"/>
-		</Marker>
-		<Marker ver="4" type="Entry" pos="0,0,475" yaw="0.000000">
-			<MapObject name="entry_s" id="1"/>
-		</Marker>
-		<Marker ver="4" type="Entry" pos="475,0,0" yaw="270.000000">
-			<MapObject name="entry_e" id="0"/>
-		</Marker>
-		<Marker ver="4" type="Entry" pos="0,0,-475" yaw="180.000000">
-			<MapObject name="entry_n" id="FFFFFFFF"/>
+			<MapObject name="Entry0" id="FFFFFFFF"/>
 		</Marker>
 	</Markers>
 	<ScriptData>
@@ -746,6 +739,7 @@
 			<TexPanner id="F" generate="false"/>
 		</TexPanners>
 		<Generators>
+			<Entrance name="Entry0" type="Walk" hasCallback="false" entry="Entry0"/>
 		</Generators>
 		<Camera vfov="25" near="16" far="4096" bgcolor="0,0,0" leadsPlayer="false"/>
 		<Fog world="0,10,10,10,255,950,1000" entity="0,10,10,10,255,950,1000"/>

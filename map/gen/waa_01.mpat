@@ -5,15 +5,12 @@
 	[MainScript] $Script_Main
 	[Background] 80200000
 	[EntryList] $EntryList
-	[EntryCount] 4
+	[EntryCount] 1
 }
 
 #new:EntryList $EntryList
 {
-	~Vec4f:entry_n
-	~Vec4f:entry_e
-	~Vec4f:entry_s
-	~Vec4f:entry_w
+	~Vec4f:Entry0
 }
 
 #new:Script_Main $Script_Main
@@ -44,6 +41,7 @@
 #new:Script $Script_MakeEntities
 {
 	Call  MakeEntity    ( .Entity:SavePoint ~Vec4d:save_block 80000000 )
+	Call  MakeEntity    ( .Entity:HealingBlock ~Vec4d:heal_block 80000000 )
 	Return
 	End
 }
@@ -64,6 +62,14 @@
 		Exec $Script_CreateExitTriggers
 		Return
 	EndIf
+	Call  GetEntryID    ( *Var[0] )
+	Switch  *Var[0]
+		Case  ==  ~Entry:Entry0
+			Set   *Var[0] $Script_CreateExitTriggers
+			Exec  EnterWalk
+		Default
+			Exec  $Script_CreateExitTriggers
+	EndSwitch
 	Return
 	End
 }
