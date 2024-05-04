@@ -9,7 +9,7 @@
     ORI t4, r0, A % hex for 10
     ORI t5, r0, 1 % hex for 1
     % ORI t6, r0, 2 % hex for 2
-    ORI t7, r0, 7 % hex for 7
+    ORI t7, r0, 4 % hex for 4
     SB t5, 0000 (t0) % set Boots
     SB t5, 0001 (t0) % set Hammer
     SB t1, 0002 (t0) % set hp
@@ -28,8 +28,8 @@
     SB t5, 005C (t0) % Bow Get
     SB t5, 005D (t0) % Bow level
     SB t5, 0012 (t0) % Goombario out
-    SB t7, 0290 (t0) 
-    SB t7, 028E (t0) %star power
+    SB t7, 0290 (t0) % star power
+    SB t7, 028E (t0) % max star power
     JR RA
     ORI v0, r0, 2
 }

@@ -121,10 +121,10 @@
 	<Move index="076" nameMsg="26-09F" desc1Msg="23-09F" desc2Msg="25-09F" flags="00000002" category="00" inputPopup="FF" fp="00" bp="03" name="Peekaboo" ability="Peekaboo"/>
 	<Move index="077" nameMsg="1D-014" desc1Msg="1D-020" desc2Msg="00-000" flags="80000000" category="0A" inputPopup="FF" fp="00" bp="00" name="Focus"/>
 	<Move index="078" nameMsg="1D-015" desc1Msg="1D-021" desc2Msg="00-000" flags="00000008" category="0A" inputPopup="FF" fp="01" bp="01" name="Refresh"/>
-	<Move index="079" nameMsg="1D-016" desc1Msg="1D-022" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="01" bp="01" name="Lullaby"/>
-	<Move index="07A" nameMsg="1D-017" desc1Msg="1D-023" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="02" bp="02" name="StarStorm"/>
-	<Move index="07B" nameMsg="1D-018" desc1Msg="1D-024" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="02" bp="02" name="ChillOutMove"/>
-	<Move index="07C" nameMsg="1D-019" desc1Msg="1D-025" desc2Msg="00-000" flags="00000008" category="0A" inputPopup="FF" fp="03" bp="03" name="Smooch"/>
+	<Move index="079" nameMsg="1D-019" desc1Msg="1D-025" desc2Msg="00-000" flags="00000008" category="0A" inputPopup="FF" fp="02" bp="02" name="Smooch"/>
+	<Move index="07A" nameMsg="1D-018" desc1Msg="1D-024" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="03" bp="03" name="ChillOutMove"/>
+	<Move index="07B" nameMsg="1D-017" desc1Msg="1D-023" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="02" bp="02" name="StarStorm"/>
+	<Move index="07C" nameMsg="1D-016" desc1Msg="1D-022" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="01" bp="01" name="Lullaby"/>
 	<Move index="07D" nameMsg="1D-01A" desc1Msg="1D-026" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="02" bp="02" name="TimeOut"/>
 	<Move index="07E" nameMsg="1D-01B" desc1Msg="1D-027" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="02" bp="02" name="UpAndAway"/>
 	<Move index="07F" nameMsg="1D-01C" desc1Msg="1D-028" desc2Msg="00-000" flags="00008002" category="0A" inputPopup="FF" fp="00" bp="00" name="StarBeam"/>
