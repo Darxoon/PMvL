@@ -60,6 +60,7 @@
 		<Raster id="31" name="Raster_00 (copy)" palette="3" src="Raster_00 (copy).png"/>
 		<Raster id="32" name="2AE10" palette="0" src="2AE10.png"/>
 		<Raster id="33" name="Palette_02" palette="4" src="Palette_02.png"/>
+		<Raster id="34" name="sadluigi" palette="0" src="sadluigi.png"/>
 	</RasterList>
 	<AnimationList>
 		<Animation name="Anim_00">
@@ -535,6 +536,13 @@
 				<Command val="1"/>
 				<Command val="FFF6"/>
 				<Command val="0"/>
+				<Command val="2"/>
+				<Command val="2000"/>
+			</Component>
+		</Animation>
+		<Animation name="Anim_26">
+			<Component xyz="0,0,0">
+				<Command val="1034"/>
 				<Command val="2"/>
 				<Command val="2000"/>
 			</Component>
