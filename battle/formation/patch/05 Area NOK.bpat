@@ -444,7 +444,7 @@
 		Add *VarB 30`
 		Call SetPartPos        ( .Actor:Self 2` *VarA *VarB *VarC )
 		Call SetPartFlagBits   ( .Actor:Self 2` 1` .False )
-		Call SetPartScale ( .Actor:Self 2` *Fixed[1.5] *Fixed[1.5] *Fixed[1.5] )
+		Call SetPartScale ( .Actor:Self 2` *Fixed[1.2] *Fixed[1.2] *Fixed[1.2] )
 		
 		Sub *VarA 15`
 		Add *VarB 40`
@@ -456,7 +456,7 @@
 		Add *VarB 30`
 		Call SetPartPos        ( .Actor:Self 3` *VarA *VarB *VarC )
 		Call SetPartFlagBits   ( .Actor:Self 3` 1` .False )
-		Call SetPartScale ( .Actor:Self 3` *Fixed[1.5] *Fixed[1.5] *Fixed[1.5] )
+		Call SetPartScale ( .Actor:Self 3` *Fixed[1.2] *Fixed[1.2] *Fixed[1.2] )
 		
 		Add *VarA 15`
 		Add *VarB 40`
@@ -713,16 +713,16 @@
 	ExecWait  8029AF08 % DoDeath without remove - or EVS_Enemy_DeathWithoutRemove in decomp
 	
 	% Make luigi have a seizure (idk why this happens but it's funny)
-	% Call MakeLerp ( 230` 0` 300` .Easing:Linear )
-	% Loop
-	% 	Call  UpdateLerp ( )
-	% 	Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
-	% 	Call SetActorPos ( .Actor:Self *VarA *Var0 *VarC )
-	% 	Wait  1`
-	% 	If  *Var1  ==  .False 
-	% 		BreakLoop
-	% 	EndIf
-	% EndLoop
+	Call MakeLerp ( 230` 0` 300` .Easing:Linear )
+	Loop
+		Call  UpdateLerp ( )
+		Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
+		Call SetActorPos ( .Actor:Self *VarA *Var0 *VarC )
+		Wait  1`
+		If  *Var1  ==  .False 
+			BreakLoop
+		EndIf
+	EndLoop
 	
 	Call UseBattleCamPreset ( 2` ) % because 2` = default for some reason
 	
@@ -1350,6 +1350,8 @@
 }
 
 #new:Script $Script_HandleEvent_GhostLuigi {
+	Call GetActorVar ( .Actor:Self 0` *Var7 )
+	
 	Call  UseIdleAnimation  ( .Actor:Self .False )
 	Call  EnableIdleScript  ( .Actor:Self 00000000 )
 	Call  SetActorScale     ( .Actor:Self *Fixed[1.0] *Fixed[1.0] *Fixed[1.0] )
@@ -1367,7 +1369,9 @@
 			SetConst  *Var2  00820022
 			ExecWait  DoBurnHit
 		Case  ==  .Event:BurnDeath % 24
-			BreakCase
+			If *Var7 == 1`
+				BreakCase
+			EndIf
 			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00820022
@@ -1375,21 +1379,23 @@
 			ExecWait  DoBurnHit
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00820023
-			ExecWait  DoDeath
+			ExecWait  $Script_GhostLuigi_Death
 			Return
 		Case  ==  .Event:SpinSmashHit % B
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00260005
 			ExecWait  DoSpinSmashHit
 		Case  ==  .Event:SpinSmashDeath % 21
-			BreakCase
+			If *Var7 == 1`
+				BreakCase
+			EndIf
 			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00260005
 			ExecWait  DoSpinSmashHit
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00260006
-			ExecWait  DoDeath
+			ExecWait  $Script_GhostLuigi_Death
 			Return
 		Case  ==  .Event:ShockHit % 2F
 			SetConst  *Var0  00000001
@@ -1410,14 +1416,16 @@
 			Call  SetActorJumpGravity   ( .Actor:Self *Fixed[1.6] )
 			Call  JumpToGoal    ( .Actor:Self  5` .False .True .False )
 		Case  ==  .Event:ShockDeath % 26
-			BreakCase
+			If *Var7 == 1`
+				BreakCase
+			EndIf
 			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  0026000E
 			ExecWait  DoShockHit
 			SetConst  *Var0  00000001
 			SetConst  *Var1  00260006
-			ExecWait  DoDeath
+			ExecWait  $Script_GhostLuigi_Death
 			Return
 		Case  ==  .Event:StarBeam % 13
 		CaseOR  ==  00000017 % 17
@@ -1428,18 +1436,16 @@
 			ExecWait  DoImmune
 		EndCaseGroup
 		Case  ==  .Event:Death % 20
-			Call SetEnemyHP ( .Actor:Self 2` )
-			BreakCase
+			If *Var7 == 1`
+				BreakCase
+			EndIf
 			
 			SetConst  *Var0  00000001
 			SetConst  *Var1  .Animation:Hit
 			ExecWait  DoNormalHit
-			Wait  10`
-			Call ActorSpeak ( 002F0002 .Actor:Self 1` 00820014 00820004 )
-			Wait 10`
 			SetConst  *Var0  00000001
 			SetConst  *Var1  .Animation:Falling
-			ExecWait  DoDeath
+			ExecWait  $Script_GhostLuigi_Death
 			Return
 		Case  ==  .Event:EndFirstStrike % 35
 			Call  SetAnimationRate  ( .Actor:Self 00000001 *Fixed[2.0] )
@@ -1471,201 +1477,279 @@
 		Default
 	EndSwitch
 	
-	Call GetActorHP ( .Actor:Self *Var0 )
-	If *Var0 <= 5`
-		Call SetEnemyHP ( .Actor:Self 5` )
-		Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_GhostLuigi_Invulnerable )
-		
-		% Because of the Wait, the following code only gets executed once
-		% All of the player's hits have ended
-		Wait 30`
-		Call EnableIdleScript  ( .Actor:Self .False )
-		Call UseIdleAnimation  ( .Actor:Self .False )
-		
-		Call ActorSpeak ( 002F0006 .Actor:Self 1` 00820014 00820004 )
-		Call SetPartFlagBits ( .Actor:Self 2` 1` .False )
-		Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
-		Sub *VarA 20`
-		Add *VarB 20`
-		Call SetPartPos ( .Actor:Self 2` *VarA *VarB *VarC )
-		
-		Wait 30`
-		Thread
-			Wait 20`
-			Call SetAnimation ( .Actor:Self 1` .Animation:LookingUp )
-		EndThread
-		
-		Add *VarA 20`
-		Add *VarB 10`
-		Call FlyPartTo ( .Actor:Self 2` *VarA *VarB *VarC 30` 80` .Easing:Linear )
-		
-		Wait 2`
-		Thread
-			Wait 2`
-			Call SetPartFlagBits ( .Actor:Self 2` 1` .True )
-		EndThread
-		Thread
-			% Update Luigi's HP
-			Call MakeLerp ( 5` 45` 75` .Easing:Linear )
-			Loop
-				Call UpdateLerp ()
-				Call SetEnemyHP ( .Actor:Self *Var0 )
-				If *Var1 != 00000001
-					BreakLoop
-				EndIf
-				Wait 1`
-			EndLoop
-		EndThread
-		Thread
-			% Update Luigi's max HP
-			Call MakeLerp ( 35` 45` 70` .Easing:Linear )
-			Loop
-				Call UpdateLerp ()
-				Call $Function_SetMaxHP ( .Actor:Self *Var0 )
-				If *Var1 != 00000001
-					BreakLoop
-				EndIf
-				Wait 1`
-			EndLoop
-		EndThread
-		Call ActorExists ( .Actor:Enemy2 *Var0 )
-		If *Var0 == .True
-			% Make first bony beetle fly away
-			Thread
-				Wait 50`
-				Call GetActorPos ( .Actor:Enemy2 *VarA *VarB *VarC )
-				Sub *VarA 100`
-				Add *VarB 200`
-				Call SetGoalPos ( .Actor:Enemy2 *VarA *VarB *VarC )
-				Call SetActorSpeed ( .Actor:Enemy2 *Fixed[7.0] )
-				Call FlyToGoal ( .Actor:Enemy2 0` 0` .Easing:Linear )
-			EndThread
-			Thread
-				Wait 50`
-				Call SetActorRotationOffset ( .Actor:Enemy2 0` 16` 0` )
-				Set *Var0 0`
-				Loop 30`
-					Call ActorExists ( .Actor:Enemy2 *Var1 )
-					If *Var1 == .False
-						BreakLoop
-					EndIf
-					Add *Var0 20`
-					Call SetActorRotation ( .Actor:Enemy2 0` 0` *Var0 )
-					Wait 1`
-				EndLoop
-			EndThread
+	If *Var7 == 1`
+		Call GetActorHP ( .Actor:Self *Var0 )
+		If *Var0 <= 5`
+			ExecWait $Script_Luigi_UseMegaMushroom
 		EndIf
-		Call ActorExists ( .Actor:Enemy3 *Var0 )
-		If *Var0 == .True
-			% Make second bony beetle fly away
-			Thread
-				Wait 65`
-				Call GetActorPos ( .Actor:Enemy3 *VarA *VarB *VarC )
-				Sub *VarA 250`
-				Add *VarB 200`
-				Call SetGoalPos ( .Actor:Enemy3 *VarA *VarB *VarC )
-				Call SetActorSpeed ( .Actor:Enemy3 *Fixed[8.0] )
-				Call FlyToGoal ( .Actor:Enemy3 0` 0` .Easing:Linear )
-			EndThread
-			Thread
-				Wait 65`
-				Call SetActorRotationOffset ( .Actor:Enemy3 0` 16` 0` )
-				Set *Var0 0`
-				Loop 30`
-					Call ActorExists ( .Actor:Enemy3 *Var1 )
-					If *Var1 == .False
-						BreakLoop
-					EndIf
-					Add *Var0 20`
-					Call SetActorRotation ( .Actor:Enemy3 0` 0` *Var0 )
-					Wait 1`
-				EndLoop
-			EndThread
-		EndIf
-		Call SetAnimation ( .Actor:Self 1` .Animation:Idle )
-		
-		% First Half of growth
-		Call SetEnemyHP ( .Actor:Self 40` )
-		
-		Call MakeLerp ( 100` 200` 45` .Easing:QuadraticIn )
-		Loop
-			Call UpdateLerp ()
-			Set *Var2 *Var0
-			DivF *Var2 100`
-			Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
-			If *Var1 != 00000001
-				BreakLoop
-			EndIf
-			Wait 1`
-		EndLoop
-		
-		% Second Half of growth
-		Call MakeLerp ( 200` 300` 30` .Easing:QuadraticOut )
-		Loop
-			Call UpdateLerp ()
-			Set *Var2 *Var0
-			DivF *Var2 100`
-			Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
-			If *Var1 != 00000001
-				BreakLoop
-			EndIf
-			Wait 1`
-		EndLoop
-		
-		Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_Luigi )
-		Call $Function_SetActorHeight ( .Actor:Self 132` )
-		Call SetActorVar ( .Actor:Self 0` 2` )
-		Call CancelEnemyTurn ( 0000001 )
-		
-		% I tried adding a wait here but it makes SummonEnemy crash, I don't know why
-		Call ActorExists ( .Actor:Enemy2 *Var0 )
-		If *Var0 == .True
-			Call RemoveActor ( .Actor:Enemy2 )
-		EndIf
-		
-		Call ActorExists ( .Actor:Enemy3 *Var0 )
-		If *Var0 == .True
-			Call RemoveActor ( .Actor:Enemy3 )
-		EndIf
-		
-		Call UseBattleCamPreset ( 2` )
-		
-		Wait 1`
-		Call SummonEnemy ( $SpecialFormation_Bubble1 0` )
-		Call SummonEnemy ( $SpecialFormation_Bubble0 0` )
-		
-		Call UseIdleAnimation ( .Actor:Enemy0 .False )
-		Call EnableIdleScript ( .Actor:Enemy0 .False )
-		Call UseIdleAnimation ( .Actor:Enemy2 .False )
-		Call EnableIdleScript ( .Actor:Enemy2 .False )
-		
-		Call GetActorPos ( .Actor:Enemy0 *VarA *VarB *VarC)
-		Sub *VarB 200`
-		Call SetGoalPos ( .Actor:Enemy0 *VarA *VarB *VarC )
-		Call SetHomePos ( .Actor:Enemy0 *VarA *VarB *VarC )
-		Call HPBarToHome ( .Actor:Enemy0 )
-		
-		Call GetActorPos ( .Actor:Enemy2 *VarA *VarB *VarC)
-		Sub *VarB 200`
-		Call SetGoalPos ( .Actor:Enemy2 *VarA *VarB *VarC )
-		
-		Thread
-			Wait 10`
-			Call SetActorSpeed ( .Actor:Enemy2 *Fixed[4.0] )
-			Call FlyToGoal ( .Actor:Enemy2 0` 0` .Easing:Linear )
-			Call SetHomePos ( .Actor:Enemy2 *VarA *VarB *VarC )
-			Call HPBarToHome ( .Actor:Enemy2 )
-		EndThread
-		
-		Call SetActorSpeed ( .Actor:Enemy0 *Fixed[4.0] )
-		Call FlyToGoal ( .Actor:Enemy0 0` 0` .Easing:Linear )
-		
-		% Call SummonEnemy ( $SpecialFormation_BonyBeetle0 0` )
 	EndIf
 	
 	Call  SetAnimation      ( .Actor:Self 00000001 00260001 )
 	Call  EnableIdleScript  ( .Actor:Self 00000001 )
 	Call  UseIdleAnimation  ( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_GhostLuigi_Death {
+	Call ActorSpeak ( 002F0007 .Actor:Self 1` 00820014 00820004 )
+	Wait 10`
+	
+	% First Half of shrink
+	Call SetEnemyHP ( .Actor:Self 40` )
+	
+	Call MakeLerp ( 300` 200` 45` .Easing:QuadraticIn )
+	Loop
+		Call UpdateLerp ()
+		Set *Var2 *Var0
+		DivF *Var2 100`
+		Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
+		If *Var1 != 00000001
+			BreakLoop
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	% Second Half of shrink
+	Call MakeLerp ( 200` 100` 30` .Easing:QuadraticOut )
+	Loop
+		Call UpdateLerp ()
+		Set *Var2 *Var0
+		DivF *Var2 100`
+		Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
+		If *Var1 != 00000001
+			BreakLoop
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	% Kill lava bubbles
+	Call ActorExists ( .Actor:Enemy0 *Var0 )
+	Set *MB_debug *Var0
+	If *Var0 == .True
+		Call SetActorFlagBits ( .Actor:Enemy0 00024000 .True )
+		Call SetActorFlagBits ( .Actor:Enemy0 00800000 .False )
+		Thread
+			Wait 15`
+			Call SetOwnerID ( .Actor:Enemy0 )
+			SetConst *Var0 00000001 
+			SetConst *Var1 00460007 
+			ExecWait DoDeath
+		EndThread
+	EndIf
+	
+	Call ActorExists ( .Actor:Enemy2 *Var0 )
+	Set *MB_debug *Var0
+	If *Var0 == .True
+		Call SetActorFlagBits ( .Actor:Enemy2 00024000 .True )
+		Call SetActorFlagBits ( .Actor:Enemy2 00800000 .False )
+		Thread
+			Wait 30`
+			Call SetOwnerID ( .Actor:Enemy2 )
+			SetConst *Var0 00000001 
+			SetConst *Var1 00460007 
+			ExecWait DoDeath
+		EndThread
+	EndIf
+	
+	% Kill Luigi
+	Set *Var0 1`
+	Set *Var1 .Animation:Hit
+	ExecWait DoDeath
+	
+	Call CancelEnemyTurn ( 1` )
+	
+	Return
+	End
+}
+
+#new:Script $Script_Luigi_UseMegaMushroom {
+	Call SetEnemyHP ( .Actor:Self 5` )
+	Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_GhostLuigi_Invulnerable )
+	
+	% Because of the Wait, the following code only gets executed once
+	% All of the player's hits have ended
+	Wait 30`
+	Call EnableIdleScript  ( .Actor:Self .False )
+	Call UseIdleAnimation  ( .Actor:Self .False )
+	
+	Call ActorSpeak ( 002F0006 .Actor:Self 1` 00820014 00820004 )
+	Call SetPartFlagBits ( .Actor:Self 2` 1` .False )
+	Call GetActorPos ( .Actor:Self *VarA *VarB *VarC )
+	Sub *VarA 20`
+	Add *VarB 20`
+	Call SetPartPos ( .Actor:Self 2` *VarA *VarB *VarC )
+	
+	Wait 30`
+	Thread
+		Wait 20`
+		Call SetAnimation ( .Actor:Self 1` .Animation:LookingUp )
+	EndThread
+	
+	Add *VarA 20`
+	Add *VarB 10`
+	Call FlyPartTo ( .Actor:Self 2` *VarA *VarB *VarC 30` 80` .Easing:Linear )
+	
+	Wait 2`
+	Thread
+		Wait 2`
+		Call SetPartFlagBits ( .Actor:Self 2` 1` .True )
+	EndThread
+	Thread
+		% Update Luigi's HP
+		Call MakeLerp ( 5` 45` 75` .Easing:Linear )
+		Loop
+			Call UpdateLerp ()
+			Call SetEnemyHP ( .Actor:Self *Var0 )
+			If *Var1 != 00000001
+				BreakLoop
+			EndIf
+			Wait 1`
+		EndLoop
+	EndThread
+	Thread
+		% Update Luigi's max HP
+		Call MakeLerp ( 35` 45` 70` .Easing:Linear )
+		Loop
+			Call UpdateLerp ()
+			Call $Function_SetMaxHP ( .Actor:Self *Var0 )
+			If *Var1 != 00000001
+				BreakLoop
+			EndIf
+			Wait 1`
+		EndLoop
+	EndThread
+	Call ActorExists ( .Actor:Enemy2 *Var0 )
+	If *Var0 == .True
+		% Make first bony beetle fly away
+		Thread
+			Wait 50`
+			Call GetActorPos ( .Actor:Enemy2 *VarA *VarB *VarC )
+			Sub *VarA 100`
+			Add *VarB 200`
+			Call SetGoalPos ( .Actor:Enemy2 *VarA *VarB *VarC )
+			Call SetActorSpeed ( .Actor:Enemy2 *Fixed[7.0] )
+			Call FlyToGoal ( .Actor:Enemy2 0` 0` .Easing:Linear )
+		EndThread
+		Thread
+			Wait 50`
+			Call SetActorRotationOffset ( .Actor:Enemy2 0` 16` 0` )
+			Set *Var0 0`
+			Loop 30`
+				Call ActorExists ( .Actor:Enemy2 *Var1 )
+				If *Var1 == .False
+					BreakLoop
+				EndIf
+				Add *Var0 20`
+				Call SetActorRotation ( .Actor:Enemy2 0` 0` *Var0 )
+				Wait 1`
+			EndLoop
+		EndThread
+	EndIf
+	Call ActorExists ( .Actor:Enemy3 *Var0 )
+	If *Var0 == .True
+		% Make second bony beetle fly away
+		Thread
+			Wait 65`
+			Call GetActorPos ( .Actor:Enemy3 *VarA *VarB *VarC )
+			Sub *VarA 250`
+			Add *VarB 200`
+			Call SetGoalPos ( .Actor:Enemy3 *VarA *VarB *VarC )
+			Call SetActorSpeed ( .Actor:Enemy3 *Fixed[8.0] )
+			Call FlyToGoal ( .Actor:Enemy3 0` 0` .Easing:Linear )
+		EndThread
+		Thread
+			Wait 65`
+			Call SetActorRotationOffset ( .Actor:Enemy3 0` 16` 0` )
+			Set *Var0 0`
+			Loop 30`
+				Call ActorExists ( .Actor:Enemy3 *Var1 )
+				If *Var1 == .False
+					BreakLoop
+				EndIf
+				Add *Var0 20`
+				Call SetActorRotation ( .Actor:Enemy3 0` 0` *Var0 )
+				Wait 1`
+			EndLoop
+		EndThread
+	EndIf
+	Call SetAnimation ( .Actor:Self 1` .Animation:Idle )
+	
+	% First Half of growth
+	Call SetEnemyHP ( .Actor:Self 40` )
+	
+	Call MakeLerp ( 100` 200` 45` .Easing:QuadraticIn )
+	Loop
+		Call UpdateLerp ()
+		Set *Var2 *Var0
+		DivF *Var2 100`
+		Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
+		If *Var1 != 00000001
+			BreakLoop
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	% Second Half of growth
+	Call MakeLerp ( 200` 300` 30` .Easing:QuadraticOut )
+	Loop
+		Call UpdateLerp ()
+		Set *Var2 *Var0
+		DivF *Var2 100`
+		Call SetPartScale ( .Actor:Self 1` *Var2 *Var2 *Var2 )
+		If *Var1 != 00000001
+			BreakLoop
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	Call SetDefenseTable ( .Actor:Self 1` $DefenseTable_Luigi )
+	Call $Function_SetActorHeight ( .Actor:Self 132` )
+	Call SetActorVar ( .Actor:Self 0` 2` )
+	Call CancelEnemyTurn ( 0000001 )
+	
+	% I tried adding a wait here but it makes SummonEnemy crash, I don't know why
+	Call ActorExists ( .Actor:Enemy2 *Var0 )
+	If *Var0 == .True
+		Call RemoveActor ( .Actor:Enemy2 )
+	EndIf
+	
+	Call ActorExists ( .Actor:Enemy3 *Var0 )
+	If *Var0 == .True
+		Call RemoveActor ( .Actor:Enemy3 )
+	EndIf
+	
+	Call UseBattleCamPreset ( 2` )
+	
+	Wait 1`
+	Call SummonEnemy ( $SpecialFormation_Bubble1 0` )
+	Call SummonEnemy ( $SpecialFormation_Bubble0 0` )
+	
+	Call UseIdleAnimation ( .Actor:Enemy0 .False )
+	Call EnableIdleScript ( .Actor:Enemy0 .False )
+	Call UseIdleAnimation ( .Actor:Enemy2 .False )
+	Call EnableIdleScript ( .Actor:Enemy2 .False )
+	
+	Call GetActorPos ( .Actor:Enemy0 *VarA *VarB *VarC)
+	Sub *VarB 200`
+	Call SetGoalPos ( .Actor:Enemy0 *VarA *VarB *VarC )
+	Call SetHomePos ( .Actor:Enemy0 *VarA *VarB *VarC )
+	Call HPBarToHome ( .Actor:Enemy0 )
+	
+	Call GetActorPos ( .Actor:Enemy2 *VarA *VarB *VarC)
+	Sub *VarB 200`
+	Call SetGoalPos ( .Actor:Enemy2 *VarA *VarB *VarC )
+	
+	Thread
+		Wait 10`
+		Call SetActorSpeed ( .Actor:Enemy2 *Fixed[4.0] )
+		Call FlyToGoal ( .Actor:Enemy2 0` 0` .Easing:Linear )
+		Call SetHomePos ( .Actor:Enemy2 *VarA *VarB *VarC )
+		Call HPBarToHome ( .Actor:Enemy2 )
+	EndThread
+	
+	Call SetActorSpeed ( .Actor:Enemy0 *Fixed[4.0] )
+	Call FlyToGoal ( .Actor:Enemy0 0` 0` .Easing:Linear )
 	Return
 	End
 }

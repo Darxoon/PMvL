@@ -58,3 +58,35 @@
 	another trick up my sleeve![br]
 	[Wait][End]
 }
+
+#message:2F:007
+{
+	[Style Right]
+	N-N-n-n-nooooooooooooooooooooo[br]
+	oooooooooooooooooooooooooooooo[br]
+	ooooooooooooooooooooooooooooo![br]
+	[Wait][Next]
+	How could this happen to The[br]
+	Big Luigi?!
+	[Wait][End]
+}
+#message:2F:008
+{
+[Style Narrate]
+[Size 30]CREDITS[SizeReset][br][br]
+[Wait][Next]
+[Size 19]Mod made by Darxoon[br]
+for Nine's Star Haven[br]
+Battle Jam[SizeReset][br][br]
+[Wait][Next]
+ChibiTheMarioGamer and Aztro64:[br]
+Luigi Sprites from the Paper[br]
+Luigi project used.[br]
+[Wait][Next]
+Special thanks to:[br]
+Nine, Den, Wrymouth and Miigle, for[br]
+technical and creative assistance.[br]
+[Wait][Next]
+And thank you for playing [HEART][br]
+[Wait][End]
+}

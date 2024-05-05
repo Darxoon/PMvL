@@ -54,15 +54,20 @@
 	
 	Wait 20`
 	
-	Call StartBattle ( )
+	Call StartBossBattle ( .Song:CrystalKingBattle )
 	
 	Return
 	End
 }
 
 #new:Script $Script_Defeat_Luigi {
-	Call DisablePlayerInput .False
-	Call DisablePlayerInput ( .False
+	Thread
+		Wait 100`
+		Call ShowMessageAtScreenPos ( 002F0008 000000A0 00000028 )
+		Call DisablePlayerInput .False
+		Call DisablePlayerInput ( .False
+	EndThread
+	
 	Call DoNpcDefeat (
 	Return
 	End
