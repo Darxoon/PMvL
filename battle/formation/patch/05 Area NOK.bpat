@@ -974,6 +974,41 @@
 	Call UseIdleAnimation ( .Actor:Self .False )
 	Call EnableIdleScript ( .Actor:Self .False )
 	
+	% Select correct bubble
+	Call ActorExists ( .Actor:Enemy0 *Var0 )
+	If *Var0 == .True
+		Set *Var4 .Actor:Enemy0
+	Else
+		Call ActorExists ( .Actor:Enemy2 *Var0 )
+		If *Var0 == .True
+			Call UseIdleAnimation ( .Actor:Enemy2 .False )
+			Call EnableIdleScript ( .Actor:Enemy2 .False )
+			
+			Call SetActorYaw ( .Actor:Enemy2 180` )
+			
+			Wait 4`
+			Thread
+				Wait 10`
+				Call SetActorYaw ( .Actor:Enemy2 0` )
+			EndThread
+			Call GetActorPos ( .Actor:Enemy2 00000000 *Var0 00000000 )
+			Call SetGoalPos ( .Actor:Enemy2 45` *Var0 -5` ) % Home 1
+			Call SetActorSpeed ( .Actor:Enemy2 *Fixed[4.0] )
+			Call FlyToGoal ( .Actor:Enemy2 0` 0` .Easing:SinOut )
+			
+			Set *Var4 .Actor:Enemy2
+		Else
+			% No lava bubble prsent anymore
+			Call SetAnimation ( .Actor:Self 1` 00820026 ) % sad luigi
+			Wait 45`
+			Call SetAnimation ( .Actor:Self 1` .Animation:Idle )
+			
+			Call UseIdleAnimation ( .Actor:Self .True )
+			Call EnableIdleScript ( .Actor:Self .True )
+			Return
+		EndIf
+	EndIf
+	
 	% Luigi spin
 	Call MakeLerp ( 0` -360` 25` .Easing:Linear )
 	Loop
@@ -988,40 +1023,40 @@
 	Call SetActorYaw ( .Actor:Self 0` )
 	
 	% Lava bubble fly
-	Call UseIdleAnimation ( .Actor:Enemy0 .False )
-	Call EnableIdleScript ( .Actor:Enemy0 .False )
+	Call UseIdleAnimation ( *Var4 .False )
+	Call EnableIdleScript ( *Var4 .False )
 	
-	Call SetTargetActor ( .Actor:Enemy0 .Actor:Player )
-	Call SetGoalToTarget ( .Actor:Enemy0 )
-	Call AddGoalPos ( .Actor:Enemy0 0` -18` 0` )
+	Call SetTargetActor ( *Var4 .Actor:Player )
+	Call SetGoalToTarget ( *Var4 )
+	Call AddGoalPos ( *Var4 0` -18` 0` )
 	
-	Call SetActorSpeed ( .Actor:Enemy0 *Fixed[10.0] )
-	Call SetActorJumpGravity ( .Actor:Enemy0 *Fixed[0.001953125] )
-	Call JumpToGoal ( .Actor:Enemy0 0` .False .False .False )
+	Call SetActorSpeed ( *Var4 *Fixed[10.0] )
+	Call SetActorJumpGravity ( *Var4 *Fixed[0.001953125] )
+	Call JumpToGoal ( *Var4 0` .False .False .False )
 	
 	Wait 2`
-	Call EnemyDamageTarget ( .Actor:Enemy0 *Var0 ~Flags:DamageType:NoContact|Fire 00000000 00000000 00000002 00000020 )
+	Call EnemyDamageTarget ( *Var4 *Var0 ~Flags:DamageType:NoContact|Fire 00000000 00000000 00000002 00000020 )
 	
 	Switch *Var0
 		CaseOR  ==  .HitResult:Hit % 0
 		CaseOR  ==  .HitResult:QuakeImmune % 2
-			Call GetGoalPos ( .Actor:Enemy0 *Var0 0` *Var2 )
-			Call SetGoalPos ( .Actor:Enemy0 *Var0 0` *Var2 )
-			Call AddGoalPos ( .Actor:Enemy0 -100` 0` 0` )
+			Call GetGoalPos ( *Var4 *Var0 0` *Var2 )
+			Call SetGoalPos ( *Var4 *Var0 0` *Var2 )
+			Call AddGoalPos ( *Var4 -100` 0` 0` )
 			
-			Call SetActorSpeed ( .Actor:Enemy0 *Fixed[10.0] )
-			Call SetActorJumpGravity ( .Actor:Enemy0 *Fixed[0.7] )
-			Call JumpToGoal ( .Actor:Enemy0 30` .False .True .False )
+			Call SetActorSpeed ( *Var4 *Fixed[10.0] )
+			Call SetActorJumpGravity ( *Var4 *Fixed[0.7] )
+			Call JumpToGoal ( *Var4 30` .False .True .False )
 			Call YieldTurn ( )
 			
-			Call SetGoalToHome ( .Actor:Enemy0 )
-			Call SetActorSpeed ( .Actor:Enemy0 *Fixed[6.0] )
-			Call FlyToGoal ( .Actor:Enemy0 0` 0` .Easing:Linear )
+			Call SetGoalToHome ( *Var4 )
+			Call SetActorSpeed ( *Var4 *Fixed[6.0] )
+			Call FlyToGoal ( *Var4 0` 0` .Easing:Linear )
 		EndCaseGroup
 	EndSwitch
 	
-	Call UseIdleAnimation ( .Actor:Enemy0 .True )
-	Call EnableIdleScript ( .Actor:Enemy0 .True )
+	Call UseIdleAnimation ( *Var4 .True )
+	Call EnableIdleScript ( *Var4 .True )
 	Call UseIdleAnimation ( .Actor:Self .True )
 	Call EnableIdleScript ( .Actor:Self .True )
 	Return
