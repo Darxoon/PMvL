@@ -229,7 +229,7 @@
 }
 
 #new:IdleAnimations $IdleAnimations_Projectile {
-	.Status:Normal    003D000B
+	.Status:Normal    00820027
 	.Status:End
 }
 
