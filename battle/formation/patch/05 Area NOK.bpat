@@ -182,8 +182,7 @@
 	% stats
 	[Index]         D4b
 	[Level]         40`b
-	% [MaxHP]         30`b
-	[MaxHP]         2`b
+	[MaxHP]         30`b
 	[Coins]         1`b
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
@@ -742,6 +741,8 @@
 	Call AddActorPos ( .Actor:Enemy1 0` 200` 0` )
 	Call SetPartFlagBits   ( .Actor:Self 1` 20001 .True )
 	Call SetPartFlagBits   ( .Actor:Enemy1 1` 20001 .False )
+	Call UseIdleAnimation ( .Actor:Enemy1 .False )
+	Call EnableIdleScript ( .Actor:Enemy1 .False )
 	
 	% Make Mario emote
 	Wait 20`
@@ -808,7 +809,7 @@
 	[Flags]       00000000
 	[StatusTable] $StatusTable_8021975C
 	% ai
-	[PartsCount]    2`s
+	[PartsCount]    3`s
 	[PartsTable]  $PartsTable_GhostLuigi
 	[Script]      $Script_Init_GhostLuigi
 	% move effectiveness
@@ -829,10 +830,16 @@
 #new:PartsTable $PartsTable_GhostLuigi {
 	00820001 01000000 002C00B0 $IdleAnimations_Luigi $DefenseTable_Luigi 00000000 00000000 00F60000 00000000
 	00120001 02000000 001800FF $IdleAnimations_MegaMushroom $DefenseTable_Luigi 00000000 00000000 FFF60000 00000000
+	00120001 03000000 001800B0 $IdleAnimations_ThrownHammer $DefenseTable_Luigi 00000000 00000000 FFF60000 00000000
 }
 
 #new:IdleAnimations $IdleAnimations_MegaMushroom {
 	.Status:Normal    .Animation:MegaMushroom
+	.Status:End
+}
+
+#new:IdleAnimations $IdleAnimations_ThrownHammer {
+	.Status:Normal    00820025
 	.Status:End
 }
 
@@ -880,9 +887,9 @@
 	
 	If *Var1 == 0`
 		If *Var0 == 1`
-			Set *Debug[0] 81`
+			ExecWait $Script_GhostLuigi_HammerThrow
 		Else
-			Set *Debug[0] 92`
+			ExecWait $Script_GhostLuigi_BubbleKick
 		EndIf
 		
 		Call SetActorVar ( .Actor:Self 1` 1` )
@@ -903,6 +910,120 @@
 		Call SetActorVar ( .Actor:Self 1` 0` )
 	EndIf
 	
+	Return
+	End
+}
+
+#new:Script $Script_GhostLuigi_HammerThrow {
+	Call UseIdleAnimation ( .Actor:Self .False )
+	Call EnableIdleScript ( .Actor:Self .False )
+	
+	Call SetAnimation ( .Actor:Self 1` 00820024 ) % reaching back with hammer
+	
+	Wait 20`
+	
+	Call SetTargetActor ( .Actor:Self .Actor:Player )
+	Call SetGoalToTarget ( .Actor:Self )
+	
+	Thread
+		Set *Var0 0`
+		Loop 32`
+			Call SetPartRotation ( .Actor:Self 3` 00000000 00000000 *Var0 )
+			Add *Var0 00000021
+			Wait 1`
+		EndLoop
+	EndThread
+	
+	Call SetAnimation ( .Actor:Self 1` .Animation:AboutToJump )
+	Call GetActorPos ( .Actor:Self *Var0 *Var1 *Var2 )
+	Add *Var0 20`
+	Add *Var1 34`
+	Call SetPartPos ( .Actor:Self 3` *Var0 *Var1 *Var2 )
+	Call SetPartFlagBits ( .Actor:Self 3` 00000001 .False )
+	
+	Call GetGoalPos ( .Actor:Self *Var0 *Var1 *Var2 )
+	Sub *Var0 10`
+	Add *Var1 12`
+	
+	Call SetPartMoveSpeed ( .Actor:Self 3` *Fixed[12.0] )
+	Call SetPartJumpGravity ( .Actor:Self 3` *Fixed[0.5] )
+	Call JumpPartTo ( .Actor:Self 3` *Var0 *Var1 *Var2 30` .True )
+	
+	Wait 2`
+	Call EnemyDamageTarget ( .Actor:Self *Var0 ~Flags:DamageType:NoContact 00000000 00000000 00000002 00000020 )
+	
+	Switch *Var0
+		CaseOR  ==  .HitResult:Hit % 0
+		CaseOR  ==  .HitResult:QuakeImmune % 2
+			Call GetPartOffset     ( .Actor:Self 3` *Var0 *Var1 *Var2 )
+			Sub *Var0  00000064
+			Call SetPartJumpGravity    ( .Actor:Self 3` *Fixed[0.7] )
+			Call JumpPartTo        ( .Actor:Self 3` *Var0  0` *Var2  30` .True )
+			Call SetPartFlagBits   ( .Actor:Self 3` 00000001 .True )
+			Call YieldTurn ( )
+		EndCaseGroup
+	EndSwitch
+	
+	Call UseIdleAnimation ( .Actor:Self .True )
+	Call EnableIdleScript ( .Actor:Self .True )
+	Return
+	End
+}
+
+#new:Script $Script_GhostLuigi_BubbleKick {
+	Call UseIdleAnimation ( .Actor:Self .False )
+	Call EnableIdleScript ( .Actor:Self .False )
+	
+	% Luigi spin
+	Call MakeLerp ( 0` -360` 25` .Easing:Linear )
+	Loop
+		Call UpdateLerp ()
+		Call SetActorYaw ( .Actor:Self *Var0 )
+		If *Var1 != 00000001
+			BreakLoop
+		EndIf
+		Wait 1`
+	EndLoop
+	
+	Call SetActorYaw ( .Actor:Self 0` )
+	
+	% Lava bubble fly
+	Call UseIdleAnimation ( .Actor:Enemy0 .False )
+	Call EnableIdleScript ( .Actor:Enemy0 .False )
+	
+	Call SetTargetActor ( .Actor:Enemy0 .Actor:Player )
+	Call SetGoalToTarget ( .Actor:Enemy0 )
+	Call AddGoalPos ( .Actor:Enemy0 0` -18` 0` )
+	
+	Call SetActorSpeed ( .Actor:Enemy0 *Fixed[10.0] )
+	Call SetActorJumpGravity ( .Actor:Enemy0 *Fixed[0.001953125] )
+	Call JumpToGoal ( .Actor:Enemy0 0` .False .False .False )
+	
+	Wait 2`
+	Call EnemyDamageTarget ( .Actor:Enemy0 *Var0 ~Flags:DamageType:NoContact|Fire 00000000 00000000 00000002 00000020 )
+	
+	Switch *Var0
+		CaseOR  ==  .HitResult:Hit % 0
+		CaseOR  ==  .HitResult:QuakeImmune % 2
+			Call GetGoalPos ( .Actor:Enemy0 *Var0 0` *Var2 )
+			Call SetGoalPos ( .Actor:Enemy0 *Var0 0` *Var2 )
+			Call AddGoalPos ( .Actor:Enemy0 -100` 0` 0` )
+			
+			Call SetActorSpeed ( .Actor:Enemy0 *Fixed[10.0] )
+			Call SetActorJumpGravity ( .Actor:Enemy0 *Fixed[0.7] )
+			Call JumpToGoal ( .Actor:Enemy0 30` .False .True .False )
+			Call YieldTurn ( )
+			
+			Call SetGoalToHome ( .Actor:Enemy0 )
+			Call SetActorSpeed ( .Actor:Enemy0 *Fixed[6.0] )
+			Call FlyToGoal ( .Actor:Enemy0 0` 0` .Easing:Linear )
+		EndCaseGroup
+	EndSwitch
+	
+	Call UseIdleAnimation ( .Actor:Enemy0 .True )
+	Call EnableIdleScript ( .Actor:Enemy0 .True )
+	Call UseIdleAnimation ( .Actor:Self .True )
+	Call EnableIdleScript ( .Actor:Self .True )
 	Return
 	End
 }
@@ -1461,6 +1582,7 @@
 		Call SetActorVar ( .Actor:Self 0` 2` )
 		Call CancelEnemyTurn ( 0000001 )
 		
+		% I tried adding a wait here but it makes SummonEnemy crash, I don't know why
 		Call ActorExists ( .Actor:Enemy2 *Var0 )
 		If *Var0 == .True
 			Call RemoveActor ( .Actor:Enemy2 )
