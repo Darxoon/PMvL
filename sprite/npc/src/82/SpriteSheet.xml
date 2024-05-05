@@ -7,6 +7,10 @@
 		<Palette id="3" name="0B640 - Copy" src="0B640 - Copy.pal.png"/>
 		<Palette id="4" name="Palette_02" src="Palette_02.pal.png"/>
 		<Palette id="5" name="Raster_2E" src="Raster_2E.pal.png"/>
+		<Palette id="6" name="BallOfDen004" src="BallOfDen004.pal.png"/>
+		<Palette id="7" name="BallOfDen001" src="BallOfDen001.pal.png"/>
+		<Palette id="8" name="BallOfDen002" src="BallOfDen002.pal.png"/>
+		<Palette id="9" name="BallOfDen003" src="BallOfDen003.pal.png"/>
 	</PaletteList>
 	<RasterList>
 		<Raster id="0" palette="0" src="Raster_00.png"/>
@@ -63,6 +67,10 @@
 		<Raster id="33" name="Palette_02" palette="4" src="Palette_02.png"/>
 		<Raster id="34" name="sadluigi" palette="0" src="sadluigi.png"/>
 		<Raster id="35" name="Raster_2E" palette="5" src="Raster_2E.png"/>
+		<Raster id="36" name="BallOfDen004" palette="6" src="BallOfDen004.png"/>
+		<Raster id="37" name="BallOfDen001" palette="7" src="BallOfDen001.png"/>
+		<Raster id="38" name="BallOfDen002" palette="8" src="BallOfDen002.png"/>
+		<Raster id="39" name="BallOfDen003" palette="9" src="BallOfDen003.png"/>
 	</RasterList>
 	<AnimationList>
 		<Animation name="Anim_00">
@@ -551,12 +559,30 @@
 		</Animation>
 		<Animation name="Anim_27">
 			<Component xyz="0,0,0">
-				<Command val="1035"/>
+				<Command val="1037"/>
 				<Command val="3001"/>
 				<Command val="0"/>
 				<Command val="FFF4"/>
 				<Command val="0"/>
-				<Command val="2"/>
+				<Command val="6"/>
+				<Command val="1038"/>
+				<Command val="3001"/>
+				<Command val="0"/>
+				<Command val="FFF4"/>
+				<Command val="0"/>
+				<Command val="6"/>
+				<Command val="1039"/>
+				<Command val="3001"/>
+				<Command val="0"/>
+				<Command val="FFF4"/>
+				<Command val="0"/>
+				<Command val="6"/>
+				<Command val="1036"/>
+				<Command val="3001"/>
+				<Command val="0"/>
+				<Command val="FFF4"/>
+				<Command val="0"/>
+				<Command val="6"/>
 				<Command val="2000"/>
 			</Component>
 		</Animation>
